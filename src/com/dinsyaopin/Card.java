@@ -24,9 +24,4 @@ public class Card<Integer, String> {
     public void setCardSuit(String cardSuit) {
         this.cardSuit = cardSuit;
     }
-
-
-    /*public Card<Integer, String> createPoolOfCards() {
-        return null;
-    }*/
 }
