@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class GameBot {
     public String botName;
     public ArrayList<Card> hand;
+    private boolean winInTradeFlag;
 
     public GameBot(String botName) {
         this.botName = botName;
@@ -21,4 +22,18 @@ public class GameBot {
         }
         return hand;
     }
+
+    public boolean toTrade() {
+        //if (this.contract)
+        //процедура торгов. Если выиграли, то вернуть флаг true.
+        return winInTradeFlag;
+    }
+
+    public void takeBuyIn(Deck deck) {
+        if (this.toTrade()) {
+            hand.add(deck.getRandomCardFromDeck()); //здесь надо подумать, может быть разместить карты прикупа на столе и со стола забирать а не из колоды?
+        }
+    }
+
+
 }
