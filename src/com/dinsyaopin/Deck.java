@@ -7,7 +7,7 @@ public class Deck {
     private ArrayList<Card> cards = new ArrayList<>(32);
     public Deck() {
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 8; j++) {
+            for (int j = 7; j < 14; j++) {
                 cards.add(new Card(i, j));
             }
         }
@@ -18,5 +18,4 @@ public class Deck {
         cards.remove(card);
         return card;
     }
-
 }
