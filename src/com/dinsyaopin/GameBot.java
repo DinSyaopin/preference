@@ -3,8 +3,8 @@ package com.dinsyaopin;
 import java.util.ArrayList;
 
 public class GameBot {
-    private String botName;
-    ArrayList<Card> hand;
+    public String botName;
+    public ArrayList<Card> hand;
 
     public void setBotName(String botName) {
         this.botName = botName;
