@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Deck {
-    private ArrayList<Card> cards = new ArrayList<>(32);
+    public ArrayList<Card> cards = new ArrayList<>(32);
     public Deck() {
         for (int i = 0; i < 4; i++) {
             for (int j = 7; j < 15; j++) {
@@ -12,9 +12,11 @@ public class Deck {
             }
         }
     }
-    public Card getCardFromDeck() {
+    public Card getRandomCardFromDeck() {
         Random random = new Random();
-        Card card = cards.get(random.nextInt());
+        int bound = cards.size();
+        int randomNumber = random.nextInt(bound);
+        Card card = cards.get(randomNumber);
         cards.remove(card);
         return card;
     }

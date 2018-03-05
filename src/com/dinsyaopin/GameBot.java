@@ -17,7 +17,7 @@ public class GameBot {
     public ArrayList<Card> initializeHand(Deck deck) {
         ArrayList<Card> hand = new ArrayList<>();
         for (int i = 0; i < 10 ; i++) {
-            hand.add(deck.getCardFromDeck());
+            hand.add(deck.getRandomCardFromDeck());
         }
         return hand;
     }
