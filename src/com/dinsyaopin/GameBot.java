@@ -6,7 +6,7 @@ public class GameBot {
     public String botName;
     public ArrayList<Card> hand;
 
-    public void setBotName(String botName) {
+    public GameBot(String botName) {
         this.botName = botName;
     }
 
