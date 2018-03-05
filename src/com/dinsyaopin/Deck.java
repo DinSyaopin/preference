@@ -6,7 +6,7 @@ import java.util.Random;
 public class Deck {
     public ArrayList<Card> cards = new ArrayList<>(32);
     public Deck() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 1; i < 5; i++) {
             for (int j = 7; j < 15; j++) {
                 cards.add(new Card(i, j));
             }

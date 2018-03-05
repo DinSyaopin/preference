@@ -6,10 +6,10 @@ public class Card {
 
     public Card(int cardSuit, int cardRank) {
         switch (cardSuit) {
-            case 0 : suit = Suits.HEARTS; break;
-            case 1 : suit = Suits.DIAMONDS; break;
+            case 1 : suit = Suits.SPADES; break;
             case 2 : suit = Suits.CLUBS; break;
-            case 3 : suit = Suits.SPADES; break;
+            case 3 : suit = Suits.DIAMONDS; break;
+            case 4 : suit = Suits.HEARTS; break;
             default: suit = null;
                 System.out.println("Incompatible suit.");
         }

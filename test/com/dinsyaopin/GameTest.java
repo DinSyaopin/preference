@@ -18,5 +18,6 @@ public class GameTest {
         assertEquals(10, bot1.hand.size());
         assertEquals(10, bot2.hand.size());
         assertEquals(10, bot3.hand.size());
+        System.out.println("Заглушка");
     }
 }
