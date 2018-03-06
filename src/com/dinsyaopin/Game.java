@@ -10,5 +10,9 @@ public class Game {
         dealer.giveCardsToPlayer(bot1);
         dealer.giveCardsToPlayer(bot2);
         dealer.giveCardsToPlayer(bot3);
+        startTrading();
+    }
+    public static void startTrading() {
+        Contract contract = new Contract();
     }
 }
