@@ -13,8 +13,13 @@ public class Game {
         dealer.giveCardsToPlayer(bot1);
         dealer.giveCardsToPlayer(bot2);
         dealer.giveCardsToPlayer(bot3);
-        game.startTrading();
-        game.startGame(bot1, bot2, bot3);
+        Trader trader = new Trader();
+        trader.gameBots.add(bot1);
+        trader.gameBots.add(bot2);
+        trader.gameBots.add(bot3);
+        //game.startTrading();
+        //game.startGame(bot1, bot2, bot3);
+        System.out.println("11");
     }
     public void startTrading() {
         Contract contract = new Contract();

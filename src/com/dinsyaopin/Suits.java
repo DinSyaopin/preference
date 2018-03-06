@@ -1,10 +1,10 @@
 package com.dinsyaopin;
 
 public enum Suits {
-    SPADES(1),
-    CLUBS(2),
-    DIAMONDS(3),
-    HEARTS(4);
+    SPADES(0),
+    CLUBS(1),
+    DIAMONDS(2),
+    HEARTS(3);
 
     private final int value;
 
