@@ -6,12 +6,15 @@ import java.util.Random;
 public class Deck {
     public ArrayList<Card> cards = new ArrayList<>(32);
     public Deck() {
-        for (int i = 1; i < 5; i++) {
-            for (int j = 7; j < 15; j++) {
-                cards.add(new Card(i, j));
+        for (Ranks r:
+             Ranks.values()) {
+            for (Suits s:
+                 Suits.values()) {
+                cards.add(new Card(r, s));
             }
         }
     }
+
     public Card getRandomCardFromDeck() {
         Random random = new Random();
         int bound = cards.size();
