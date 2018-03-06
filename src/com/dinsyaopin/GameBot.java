@@ -6,6 +6,15 @@ public class GameBot {
     public String botName;
     public ArrayList<Card> hand;
     private boolean winInTradeFlag;
+    private int trick;
+
+    public int getTrick() {
+        return trick;
+    }
+
+    public void setTrick(int trick) {
+        this.trick = trick;
+    }
 
     public GameBot(String botName) {
         this.botName = botName;
@@ -35,5 +44,7 @@ public class GameBot {
         }
     }
 
+    public void putCard() {
 
+    }
 }
