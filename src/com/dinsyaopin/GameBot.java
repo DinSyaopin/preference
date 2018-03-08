@@ -34,23 +34,6 @@ public class GameBot {
         return hand;
     }*/
 
-    public String toTrade() {
-        int[] suitsCounterArray = {0, 0, 0, 0};
-
-        for (Card c:
-             hand) {
-            if (c.rank.getValue() >= Ranks.JACK.getValue()) {
-                suitsCounterArray[c.suit.getValue()]++;
-                }
-            }
-        for(int i = 0; i < suitsCounterArray.length; i++)
-        {
-            if (suitsCounterArray[i] == 4)
-                return "6 " + Suits.values()[i];
-        }
-        return contract;
-    }
-
     /*public void takeBuyIn(Deck deck) {
         if (this.toTrade()) {
             hand.add(deck.getRandomCardFromDeck()); //здесь надо подумать, может быть разместить карты прикупа на столе и со стола забирать а не из колоды?
