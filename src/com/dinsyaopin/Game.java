@@ -1,5 +1,7 @@
 package com.dinsyaopin;
 
+import java.util.ArrayList;
+
 public class Game {
     public int countOfTurns;
     public GameBot winnerOfTrading = null;
@@ -13,19 +15,23 @@ public class Game {
         dealer.giveCardsToPlayer(bot1);
         dealer.giveCardsToPlayer(bot2);
         dealer.giveCardsToPlayer(bot3);
+        //players have cards on their hands
         Trader trader = new Trader();
-        trader.gameBots.add(bot1);
-        trader.gameBots.add(bot2);
-        trader.gameBots.add(bot3);
-        //game.startTrading();
+        ArrayList<GameBot> gameBots = new ArrayList<>();
+        gameBots.add(bot1);
+        gameBots.add(bot2);
+        gameBots.add(bot3);
+        String contract = trader.toTrade(gameBots);
+        //trader.gameBots.add(bot1);
+        //trader.gameBots.add(bot2);
+        //trader.gameBots.add(bot3);
+        //String contract = trader.toTrade(); //take contract from trading of players
+
         //game.startGame(bot1, bot2, bot3);
         System.out.println("11");
     }
-    public void startTrading() {
-        Contract contract = new Contract();
-    }
 
-    public void startGame(GameBot bot1, GameBot bot2, GameBot bot3) {
+    public void startTurns(GameBot bot1, GameBot bot2, GameBot bot3) {
         countOfTurns = 1;
         while (countOfTurns != 9) {
             winnerOfTrading.putCard();

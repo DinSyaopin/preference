@@ -5,10 +5,10 @@ import java.util.Arrays;
 
 public class GameBot {
     public String botName;
-    public ArrayList<Card> hand;
-    private boolean winInTradeFlag;
+    public ArrayList<Card> hand = new ArrayList<>();
+    //private boolean winInTradeFlag;
     private int trick;
-    private String contract;
+    //private String contract;
 
     public int getTrick() {
         return trick;
@@ -26,13 +26,13 @@ public class GameBot {
         return botName;
     }
 
-    /*public ArrayList<Card> initializeHand(Deck deck) {
+    public ArrayList<Card> initializeHand(Deck deck) {
         ArrayList<Card> hand = new ArrayList<>();
         for (int i = 0; i < 10 ; i++) {
             hand.add(deck.getRandomCardFromDeck());
         }
         return hand;
-    }*/
+    }
 
     /*public void takeBuyIn(Deck deck) {
         if (this.toTrade()) {
