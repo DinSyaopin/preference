@@ -9,7 +9,6 @@ public class Game {
     public int countOfTurns;
     public GameBot winnerOfTrading = null;
     public static void main(String[] args) {
-        Game game = new Game();
         Dealer dealer = new Dealer();
         GameBot bot1 = new GameBot("Player1");
         GameBot bot2 = new GameBot("Player2");

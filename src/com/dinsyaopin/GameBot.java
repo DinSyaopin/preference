@@ -1,20 +1,21 @@
 package com.dinsyaopin;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameBot {
     public String botName;
     public ArrayList<Card> hand = new ArrayList<>();
-    //private boolean winInTradeFlag;
     private int trick;
-    private int pass;
+    private boolean pass;
 
-    public int getPass() {
+    public boolean getPass() {
         return pass;
     }
+    public int getIntPass() {
+        return pass ? 1 : 0;
+    }
 
-    public void setPass(int pass) {
+    public void setPass(boolean pass) {
         this.pass = pass;
     }
 

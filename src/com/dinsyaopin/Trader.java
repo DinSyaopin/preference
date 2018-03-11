@@ -17,54 +17,50 @@ public class Trader {
         while (endTradeCondition) {
             for (GameBot gameBot :
                     gameBots) {
-                if (gameBot.getPass() == 1) break;//player with pass, can't be participant of trading
+                //
+                //Может быть выделить все контракты в отдельную структуру?
+                //
+                //
+                if (gameBot.getPass()) continue;//player with pass, can't be participant of trading
                 if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.NINE, 6).equals("")) {
                     contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.NINE, 6);
-                    break;
+                    continue;
                 }
                 if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 6).equals("")) {
                     contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 6);
-                    break;
+                    continue;
                 }
                 if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.EIGHT, 7).equals("")) {
                     contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.EIGHT, 7);
-                    break;
+                    continue;
                 }
                 if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 7).equals("")) {
                     contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 7);
-                    break;
+                    continue;
                 }
                 if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.SEVEN, 8).equals("")) {
                     contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.SEVEN, 8);
-                    break;
+                    continue;
                 }
                 if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 8).equals("")) {
                     contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 8);
-                    break;
+                    continue;
                 }
-                if (!playerTradingStrategy.checkNineElderCardsOfOneSuit(gameBot).equals("")) {
-                    contract = playerTradingStrategy.checkNineElderCardsOfOneSuit(gameBot);
-                    break;
+                if (!playerTradingStrategy.checkNineTenElderCardsOfOneSuit(gameBot).equals("")) {
+                    contract = playerTradingStrategy.checkNineTenElderCardsOfOneSuit(gameBot);
+                    continue;
                 }
-                if (!playerTradingStrategy.checkNineElderCardsOfAllSuits(gameBot).equals("")) {
-                    contract = playerTradingStrategy.checkNineElderCardsOfAllSuits(gameBot);
-                    break;
-                }
-                if (!playerTradingStrategy.checkTenElderCardsOfOneSuit(gameBot).equals("")) {
-                    contract = playerTradingStrategy.checkTenElderCardsOfOneSuit(gameBot);
-                    break;
-                }
-                if (!playerTradingStrategy.checkTenElderCardsOfAllSuits(gameBot).equals("")) {
-                    contract = playerTradingStrategy.checkTenElderCardsOfAllSuits(gameBot);
-                    break;
+                if (!playerTradingStrategy.checkNineTenElderCardsOfAllSuits(gameBot).equals("")) {
+                    contract = playerTradingStrategy.checkNineTenElderCardsOfAllSuits(gameBot);
+                    continue;
                 }
                 if (!playerTradingStrategy.checkMisere(gameBot).equals("")) {
                     contract = playerTradingStrategy.checkMisere(gameBot);
-                    break;
+                    continue;
                 }
-                if (contract.equals("")) gameBot.setPass(1);
+                if (contract.equals("")) gameBot.setPass(true);
             }
-            pass = gameBots.get(0).getPass() + gameBots.get(1).getPass() + gameBots.get(2).getPass();
+            pass = gameBots.get(0).getIntPass() + gameBots.get(1).getIntPass() + gameBots.get(2).getIntPass();
         }
         return contract; //in the end of trading we're taking contract(thinking that in another method we should compare
         //winner's contract with players contract and take winner)

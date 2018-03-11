@@ -2,8 +2,8 @@ package com.dinsyaopin.PlayerStrategy;
 
 import com.dinsyaopin.Card;
 import com.dinsyaopin.GameBot;
-import com.dinsyaopin.Ranks;
 import com.dinsyaopin.Suits;
+import com.dinsyaopin.Ranks;
 
 public class NoviceTradingStrategy implements PlayerTradingStrategy {
     @Override
@@ -37,25 +37,7 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
     }
 
     @Override
-    public String checkNineElderCardsOfOneSuit(GameBot gameBot) {
-        int[] suitsCounterArray = countElderCardsOfCertainSuits(gameBot, Ranks.SEVEN);
-        String currentContract = "";
-        for(int i = 0; i < suitsCounterArray.length; i++)
-        {
-            if (suitsCounterArray[i] == 8) {
-                for (Card c:
-                        gameBot.hand) {
-                    if (c.rank.getValue() == Ranks.ACE.getValue() && c.suit.getValue() != i ) { //find Ace without trump suit
-                        currentContract = "9 " + Suits.values()[i];
-                    }
-                }
-            }
-        }
-        return currentContract;
-    }
-
-    @Override
-    public String checkTenElderCardsOfOneSuit(GameBot gameBot) {
+    public String checkNineTenElderCardsOfOneSuit(GameBot gameBot) {
         int[] suitsCounterArray = countElderCardsOfCertainSuits(gameBot, Ranks.SEVEN);
         int countOfAcesNotTrump = 0;
         String currentContract = "";
@@ -69,8 +51,12 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
                     }
                 }
             }
-            if (countOfAcesNotTrump == 2) {
+            if (countOfAcesNotTrump == 1) {
+                currentContract = "9 " + Suits.values()[i];
+            }
+            else if (countOfAcesNotTrump == 2) {
                 currentContract = "10 " + Suits.values()[i];
+
             }
             else currentContract = "";
         }
@@ -101,7 +87,7 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
     }
 
     @Override
-    public String checkNineElderCardsOfAllSuits(GameBot gameBot) {
+    public String checkNineTenElderCardsOfAllSuits(GameBot gameBot) {
         int counterOfWinningCards = 0;
         String currentContract = "";
         for (Card c :
@@ -114,26 +100,7 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
                 if (counterOfWinningCards == 9) {
                     currentContract = "9_NO_TRUMP";
                 }
-                if (c.rank.getValue() == Ranks.QUEEN.getValue()) {
-                    counterOfWinningCards++;
-                }
-            }
-        }
-        return currentContract;
-    }
-
-    @Override
-    public String checkTenElderCardsOfAllSuits(GameBot gameBot) {
-        int counterOfWinningCards = 0;
-        String currentContract = "";
-        for (Card c :
-                gameBot.hand) {
-            if (c.rank.getValue() >= Ranks.KING.getValue()) counterOfWinningCards++;
-        }
-        if (counterOfWinningCards == 8) {
-            for (Card c :
-                    gameBot.hand) {
-                if (counterOfWinningCards == 10) {
+                else if (counterOfWinningCards == 10) {
                     currentContract = "10_NO_TRUMP";
                 }
                 if (c.rank.getValue() == Ranks.QUEEN.getValue()) {
@@ -143,7 +110,6 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
         }
         return currentContract;
     }
-
     @Override
     public String checkMisere(GameBot gameBot) {
         int quantityOfWinningCards = 0;
@@ -156,4 +122,10 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
         }
         else return "";
     }
+
+    //
+    //
+    //
+    //
 }
+
