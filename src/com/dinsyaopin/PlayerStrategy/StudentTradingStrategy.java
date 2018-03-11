@@ -33,4 +33,9 @@ public class StudentTradingStrategy implements PlayerTradingStrategy {
     public String checkMisere(GameBot gameBot) {
         return null;
     }
+
+    @Override
+    public String toTrade(GameBot gameBot, PlayerTradingStrategy playerTradingStrategy) {
+        return null;
+    }
 }

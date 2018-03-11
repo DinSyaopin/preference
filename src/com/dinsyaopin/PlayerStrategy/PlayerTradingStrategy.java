@@ -9,7 +9,8 @@ public interface PlayerTradingStrategy {
     String checkElderCardsOfOneSuit(GameBot gameBot);
     int countCurrentCard(GameBot gameBot, Ranks rank, int counterOfWinningCards);
     String checkElderCardsOfAllSuits(GameBot gameBot);
-    public String checkMisere(GameBot gameBot);
+    String checkMisere(GameBot gameBot);
+    String toTrade(GameBot gameBot, PlayerTradingStrategy playerTradingStrategy);
 
     /*Надо сделать процесс торговли зависимым от уровня игрока.
     -Новичок не перебивает контракт другого игрока.

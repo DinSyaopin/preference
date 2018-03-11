@@ -44,7 +44,7 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
 
     @Override
     public String checkElderCardsOfOneSuit(GameBot gameBot) {
-        int[] suitsCounterArray = countCardsOfCertainSuits(gameBot); //fill array with cards value higher or equal rank
+        int[] suitsCounterArray = countCardsOfCertainSuits(gameBot);
         return setContract(suitsCounterArray, gameBot);
     }
     @Override
@@ -86,6 +86,24 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
             return "MISERE";
         }
         else return "";
+    }
+    @Override
+    public String toTrade(GameBot gameBot, PlayerTradingStrategy playerTradingStrategy) {
+        if (gameBot.getPass()) {
+            return "";
+        }
+        else {
+            if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot).equals("")) {
+                return playerTradingStrategy.checkElderCardsOfOneSuit(gameBot);
+            }
+            if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot).equals("")) {
+                return playerTradingStrategy.checkElderCardsOfAllSuits(gameBot);
+            }
+            if (!playerTradingStrategy.checkMisere(gameBot).equals("")) {
+                return playerTradingStrategy.checkMisere(gameBot);
+            }
+        }
+        return "";
     }
 }
 

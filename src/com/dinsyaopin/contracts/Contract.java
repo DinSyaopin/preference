@@ -1,6 +1,5 @@
 package com.dinsyaopin.contracts;
 
-import com.dinsyaopin.Suits;
 
 public class Contract {
     private int tricks;
