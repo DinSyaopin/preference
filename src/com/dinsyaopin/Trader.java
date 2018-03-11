@@ -22,38 +22,8 @@ public class Trader {
                 //
                 //
                 if (gameBot.getPass()) continue;//player with pass, can't be participant of trading
-                if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.NINE, 6).equals("")) {
-                    contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.NINE, 6);
-                    continue;
-                }
-                if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 6).equals("")) {
-                    contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 6);
-                    continue;
-                }
-                if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.EIGHT, 7).equals("")) {
-                    contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.EIGHT, 7);
-                    continue;
-                }
-                if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 7).equals("")) {
-                    contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 7);
-                    continue;
-                }
-                if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.SEVEN, 8).equals("")) {
-                    contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.SEVEN, 8);
-                    continue;
-                }
-                if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 8).equals("")) {
-                    contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 8);
-                    continue;
-                }
-                if (!playerTradingStrategy.checkNineTenElderCardsOfOneSuit(gameBot).equals("")) {
-                    contract = playerTradingStrategy.checkNineTenElderCardsOfOneSuit(gameBot);
-                    continue;
-                }
-                if (!playerTradingStrategy.checkNineTenElderCardsOfAllSuits(gameBot).equals("")) {
-                    contract = playerTradingStrategy.checkNineTenElderCardsOfAllSuits(gameBot);
-                    continue;
-                }
+                if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot).equals("")) continue;
+                if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot).equals("")) continue;
                 if (!playerTradingStrategy.checkMisere(gameBot).equals("")) {
                     contract = playerTradingStrategy.checkMisere(gameBot);
                     continue;

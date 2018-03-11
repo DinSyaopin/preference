@@ -5,47 +5,27 @@ import com.dinsyaopin.Ranks;
 
 public class StudentTradingStrategy implements PlayerTradingStrategy {
     @Override
-    public int[] countElderCardsOfCertainSuits(GameBot gameBot, Ranks rank) {
+    public int[] countCardsOfCertainSuits(GameBot gameBot) {
         return new int[0];
     }
 
     @Override
-    public String setContract(int[] elderCardsOfEachSuits, int quantityOfTricks) {
+    public String setContract(int[] elderCardsOfEachSuits, GameBot gameBot) {
         return null;
     }
 
     @Override
-    public String checkElderCardsOfOneSuit(GameBot gameBot, Ranks rank, int quantityOfTricks) {
+    public String checkElderCardsOfOneSuit(GameBot gameBot) {
         return null;
     }
 
     @Override
-    public String checkNineElderCardsOfOneSuit(GameBot gameBot) {
-        return null;
-    }
-
-    @Override
-    public String checkTenElderCardsOfOneSuit(GameBot gameBot) {
-        return null;
-    }
-
-    @Override
-    public int countWinningCardsOfAllSuits(GameBot gameBot, Ranks rank, int counterOfWinningCards) {
+    public int countCurrentCard(GameBot gameBot, Ranks rank, int counterOfWinningCards) {
         return 0;
     }
 
     @Override
-    public String checkElderCardsOfAllSuits(GameBot gameBot, int totalWinCardsQuantity) {
-        return null;
-    }
-
-    @Override
-    public String checkNineElderCardsOfAllSuits(GameBot gameBot) {
-        return null;
-    }
-
-    @Override
-    public String checkTenElderCardsOfAllSuits(GameBot gameBot) {
+    public String checkElderCardsOfAllSuits(GameBot gameBot) {
         return null;
     }
 
