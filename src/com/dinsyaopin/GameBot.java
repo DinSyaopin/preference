@@ -8,7 +8,15 @@ public class GameBot {
     public ArrayList<Card> hand = new ArrayList<>();
     //private boolean winInTradeFlag;
     private int trick;
-    //private String contract;
+    private int pass;
+
+    public int getPass() {
+        return pass;
+    }
+
+    public void setPass(int pass) {
+        this.pass = pass;
+    }
 
     public int getTrick() {
         return trick;

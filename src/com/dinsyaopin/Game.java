@@ -1,5 +1,8 @@
 package com.dinsyaopin;
 
+import com.dinsyaopin.PlayerStrategy.NoviceTradingStrategy;
+import com.dinsyaopin.PlayerStrategy.PlayerTradingStrategy;
+
 import java.util.ArrayList;
 
 public class Game {
@@ -17,11 +20,19 @@ public class Game {
         dealer.giveCardsToPlayer(bot3);
         //players have cards on their hands
         Trader trader = new Trader();
+
+        PlayerTradingStrategy playerTradingStrategy = new NoviceTradingStrategy();
         ArrayList<GameBot> gameBots = new ArrayList<>();
         gameBots.add(bot1);
         gameBots.add(bot2);
         gameBots.add(bot3);
-        String contract = trader.toTrade(gameBots);
+        String contract = trader.toTrade(gameBots, playerTradingStrategy);
+        if (contract.equals("")) {
+            //passes
+        }
+        else {
+            //whisting
+        }
         //trader.gameBots.add(bot1);
         //trader.gameBots.add(bot2);
         //trader.gameBots.add(bot3);

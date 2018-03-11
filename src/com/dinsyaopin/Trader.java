@@ -1,189 +1,70 @@
 package com.dinsyaopin;
 
+import com.dinsyaopin.PlayerStrategy.PlayerTradingStrategy;
+
 import java.util.ArrayList;
 
 public class Trader {
-    //ArrayList<GameBot> gameBots;
-    private String contract;
-    int pass = 0;
-
-    //count array of elder cards of certain suit
-    public int[] countElderCardsOfCertainSuits(GameBot gameBot, Ranks rank) {
-        int[] suitsCounterArray = {0, 0, 0, 0};
-        for (Card c:
-                gameBot.hand) {
-            if (c.rank.getValue() >= rank.getValue()) {
-                suitsCounterArray[c.suit.getValue()]++;
-            }
-        }
-        return suitsCounterArray;
-    }
-    //check array suitsCounterArray for having guaranteed tricks
-    public String setContract(int[] suitsCounterArray, int quantityOfTricks) {
-        for(int i = 0; i < suitsCounterArray.length; i++)
-        {
-            if (suitsCounterArray[i] == quantityOfTricks) {
-                contract = quantityOfTricks + " " + Suits.values()[i];
-            }
-            else contract = "";
-        }
-        return contract;
-    }
-    public int countWinningCardsOfAllSuits(GameBot gameBot, Ranks rank, int counterOfWinningCards) {
-        for (Card c :
-                gameBot.hand) {
-            if (c.rank.getValue() == rank.getValue()) counterOfWinningCards++;
-        }
-        return counterOfWinningCards;
-    }
-
-
-    public String toTrade(ArrayList<GameBot> gameBots) {
-        while (!(pass == 2 && !contract.equals("")) || pass == 3) { //trading ends if 2 players with passes
-            // and 1 player with contract or 3 players with passes.
+    private String contract = "";
+    public static int pass = 0;
+    //
+    //
+    //
+    //
+    /////////////trading process for contract//////////////////////
+    public String toTrade(ArrayList<GameBot> gameBots, PlayerTradingStrategy playerTradingStrategy) {
+        boolean endTradeCondition = (pass == 2 && !contract.equals("")) || pass != 3;
+        while (endTradeCondition) {
             for (GameBot gameBot :
                     gameBots) {
-                //
-                //Check if player have 6 elder cards of 1 suit
-                //
-                int[] suitsCounterArray = countElderCardsOfCertainSuits(gameBot, Ranks.NINE);
-                contract = setContract(suitsCounterArray, 6);
-
-                //
-                //Check if player have 6 elder cards of all suits
-                //
-                int counterOfWinningCards = 0;
-                counterOfWinningCards = countWinningCardsOfAllSuits(gameBot, Ranks.ACE, counterOfWinningCards);
-                if (counterOfWinningCards == 4) {
-                    counterOfWinningCards = countWinningCardsOfAllSuits(gameBot, Ranks.KING, counterOfWinningCards);
-                    if (counterOfWinningCards == 6) {
-                        contract = "6_NO_TRUMP";
-                    }
+                if (gameBot.getPass() == 1) break;//player with pass, can't be participant of trading
+                if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.NINE, 6).equals("")) {
+                    contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.NINE, 6);
+                    break;
                 }
-                //
-                //Check if player have 7 elder cards of 1 suit
-                //
-                suitsCounterArray = countElderCardsOfCertainSuits(gameBot, Ranks.EIGHT);
-                contract = setContract(suitsCounterArray, 7);
-                //
-                //Check if player have 7 elder cards of all suits
-                //
-                counterOfWinningCards = 0;
-                counterOfWinningCards = countWinningCardsOfAllSuits(gameBot, Ranks.ACE, counterOfWinningCards);
-                if (counterOfWinningCards == 4) {
-                    counterOfWinningCards = countWinningCardsOfAllSuits(gameBot, Ranks.KING, counterOfWinningCards);
-                    if (counterOfWinningCards == 7) {
-                        contract = "7_NO_TRUMP";
-                    }
+                if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 6).equals("")) {
+                    contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 6);
+                    break;
                 }
-                //
-                //Check if player have 8 elder cards of 1 suit
-                //
-                suitsCounterArray = countElderCardsOfCertainSuits(gameBot, Ranks.SEVEN);
-                contract = setContract(suitsCounterArray, 8);
-                //
-                //Check if player have 8 elder cards of all suits
-                //
-                counterOfWinningCards = 0;
-                counterOfWinningCards = countWinningCardsOfAllSuits(gameBot, Ranks.ACE, counterOfWinningCards);
-                if (counterOfWinningCards == 4) {
-                    counterOfWinningCards = countWinningCardsOfAllSuits(gameBot, Ranks.KING, counterOfWinningCards);
-                    if (counterOfWinningCards == 8) {
-                        contract = "8_NO_TRUMP";
-                    }
+                if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.EIGHT, 7).equals("")) {
+                    contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.EIGHT, 7);
+                    break;
                 }
-                //
-                //Check if player have 8 elder cards of 1 suit and any Ace
-                //
-                suitsCounterArray = countElderCardsOfCertainSuits(gameBot, Ranks.SEVEN);
-                for(int i = 0; i < suitsCounterArray.length; i++)
-                {
-                    if (suitsCounterArray[i] == 8) {
-                        for (Card c:
-                                gameBot.hand) {
-                            if (c.rank.getValue() == Ranks.ACE.getValue() && c.suit.getValue() != i ) { //find Ace without trump suit
-                                contract = "9 " + Suits.values()[i];
-                            }
-                        }
-                    }
+                if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 7).equals("")) {
+                    contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 7);
+                    break;
                 }
-                //
-                //Check if player have 9 elder cards of all suits
-                //
-                counterOfWinningCards = 0;
-                for (Card c :
-                        gameBot.hand) {
-                    if (c.rank.getValue() >= Ranks.KING.getValue()) counterOfWinningCards++;
+                if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.SEVEN, 8).equals("")) {
+                    contract = playerTradingStrategy.checkElderCardsOfOneSuit(gameBot, Ranks.SEVEN, 8);
+                    break;
                 }
-                if (counterOfWinningCards == 8) {
-                    for (Card c :
-                            gameBot.hand) {
-                        if (counterOfWinningCards == 9) {
-                            contract = "9_NO_TRUMP";
-                        }
-                        if (c.rank.getValue() == Ranks.QUEEN.getValue()) {
-                            counterOfWinningCards++;
-                        }
-                    }
+                if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 8).equals("")) {
+                    contract = playerTradingStrategy.checkElderCardsOfAllSuits(gameBot, 8);
+                    break;
                 }
-                //
-                //Check if player have 8 elder cards of 1 suit and any 2 Aces
-                //
-                suitsCounterArray = countElderCardsOfCertainSuits(gameBot, Ranks.SEVEN);
-                int countOfAcesNotTrump = 0;
-                for(int i = 0; i < suitsCounterArray.length; i++)
-                {
-                    if (suitsCounterArray[i] == 8) {
-                        for (Card c:
-                                gameBot.hand) {
-                            if (c.rank.getValue() == Ranks.ACE.getValue() && c.suit.getValue() != i ) { //find Ace without trump suit
-                                countOfAcesNotTrump++;
-                            }
-                        }
-                    }
-                    if (countOfAcesNotTrump == 2) {
-                        contract = "10 " + Suits.values()[i];
-                    }
+                if (!playerTradingStrategy.checkNineElderCardsOfOneSuit(gameBot).equals("")) {
+                    contract = playerTradingStrategy.checkNineElderCardsOfOneSuit(gameBot);
+                    break;
                 }
-                //
-                //Check if player have 10 elder cards of all suits
-                //
-                counterOfWinningCards = 0;
-                for (Card c :
-                        gameBot.hand) {
-                    if (c.rank.getValue() >= Ranks.KING.getValue()) counterOfWinningCards++;
+                if (!playerTradingStrategy.checkNineElderCardsOfAllSuits(gameBot).equals("")) {
+                    contract = playerTradingStrategy.checkNineElderCardsOfAllSuits(gameBot);
+                    break;
                 }
-                if (counterOfWinningCards == 8) {
-                    for (Card c :
-                            gameBot.hand) {
-                        if (counterOfWinningCards == 10) {
-                            contract = "10_NO_TRUMP";
-                        }
-                        if (c.rank.getValue() == Ranks.QUEEN.getValue()) {
-                            counterOfWinningCards++;
-                        }
-                    }
+                if (!playerTradingStrategy.checkTenElderCardsOfOneSuit(gameBot).equals("")) {
+                    contract = playerTradingStrategy.checkTenElderCardsOfOneSuit(gameBot);
+                    break;
                 }
-                //
-                //Check if player have 10 lower cards of all suits
-                //
-                counterOfWinningCards = 0;
-                for (Card c :
-                        gameBot.hand) {
-                    if (c.rank.getValue() <= Ranks.EIGHT.getValue()) counterOfWinningCards++;
+                if (!playerTradingStrategy.checkTenElderCardsOfAllSuits(gameBot).equals("")) {
+                    contract = playerTradingStrategy.checkTenElderCardsOfAllSuits(gameBot);
+                    break;
                 }
-                if (counterOfWinningCards == 8) {
-                    for (Card c :
-                            gameBot.hand) {
-                        if (counterOfWinningCards == 10) break;
-                        if (c.rank.getValue() == Ranks.NINE.getValue()) {
-                            counterOfWinningCards++;
-                        }
-                    }
-                    contract = "10_NO_TRUMP";
+                if (!playerTradingStrategy.checkMisere(gameBot).equals("")) {
+                    contract = playerTradingStrategy.checkMisere(gameBot);
+                    break;
                 }
-                else pass++;
+                if (contract.equals("")) gameBot.setPass(1);
             }
+            pass = gameBots.get(0).getPass() + gameBots.get(1).getPass() + gameBots.get(2).getPass();
         }
         return contract; //in the end of trading we're taking contract(thinking that in another method we should compare
         //winner's contract with players contract and take winner)
