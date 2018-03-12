@@ -2,15 +2,19 @@ package com.dinsyaopin.PlayerStrategy;
 
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Ranks;
+import com.dinsyaopin.contracts.Contract;
+
+import java.util.ArrayList;
 
 public interface PlayerTradingStrategy {
     int[] countCardsOfCertainSuits(GameBot gameBot);
-    String setContract(int[] elderCardsOfEachSuits, GameBot gameBot);
-    String checkElderCardsOfOneSuit(GameBot gameBot);
+    Contract setContractWithTrump(int[] elderCardsOfEachSuits, GameBot gameBot);
+    Contract checkElderCardsOfOneSuit(GameBot gameBot);
     int countCurrentCard(GameBot gameBot, Ranks rank, int counterOfWinningCards);
-    String checkElderCardsOfAllSuits(GameBot gameBot);
-    String checkMisere(GameBot gameBot);
-    String toTrade(GameBot gameBot, PlayerTradingStrategy playerTradingStrategy);
+    Contract checkElderCardsOfAllSuits(GameBot gameBot);
+    Contract checkMisere(GameBot gameBot);
+    Contract checkContract(GameBot gameBot);
+    Contract toTrade(ArrayList<GameBot> gameBot);
 
     /*Надо сделать процесс торговли зависимым от уровня игрока.
     -Новичок не перебивает контракт другого игрока.

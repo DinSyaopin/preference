@@ -2,6 +2,9 @@ package com.dinsyaopin;
 
 import com.dinsyaopin.PlayerStrategy.NoviceTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.PlayerTradingStrategy;
+import com.dinsyaopin.contracts.Contract;
+import com.dinsyaopin.contracts.Misere;
+import com.dinsyaopin.contracts.Pass;
 
 import java.util.ArrayList;
 
@@ -18,15 +21,14 @@ public class Game {
         dealer.giveCardsToPlayer(bot2);
         dealer.giveCardsToPlayer(bot3);
         //players have cards on their hands
-        Trader trader = new Trader();
 
         PlayerTradingStrategy playerTradingStrategy = new NoviceTradingStrategy();
         ArrayList<GameBot> gameBots = new ArrayList<>();
         gameBots.add(bot1);
         gameBots.add(bot2);
         gameBots.add(bot3);
-        String contract = trader.toTrade(gameBots, playerTradingStrategy);
-        if (contract.equals("")) {
+        Contract contract = playerTradingStrategy.toTrade(gameBots);
+        if (contract instanceof Pass) {
             //passes
         }
         else {

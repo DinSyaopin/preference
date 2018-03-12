@@ -4,6 +4,12 @@ import com.dinsyaopin.Card;
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Suits;
 import com.dinsyaopin.Ranks;
+import com.dinsyaopin.contracts.Contract;
+import com.dinsyaopin.contracts.ContractWithSuit;
+import com.dinsyaopin.contracts.Misere;
+import com.dinsyaopin.contracts.Pass;
+
+import java.util.ArrayList;
 
 public class NoviceTradingStrategy implements PlayerTradingStrategy {
     @Override
@@ -17,35 +23,32 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
     }
 
     @Override
-    public String setContract(int[] cardsOfEachSuits, GameBot gameBot) {
-        String currentContract = "";
-        int quantityOfTricks = 0;
+    public Contract setContractWithTrump(int[] cardsOfEachSuits, GameBot gameBot) {
+        Contract currentContract = new Pass(0);
         int countOfAcesNotTrump = 0;
+        int quantityCardsOneSuit;
         for(int suit = 0; suit < cardsOfEachSuits.length; suit++) {
-            if (cardsOfEachSuits[suit] >= 6 && cardsOfEachSuits[suit] < 8) {
-                currentContract = quantityOfTricks + " " + Suits.values()[suit];
+            quantityCardsOneSuit = cardsOfEachSuits[suit];
+            if (quantityCardsOneSuit >= 6 && quantityCardsOneSuit < 8) {
+                currentContract = new ContractWithSuit(quantityCardsOneSuit, Suits.values()[suit]);
             }
-            if (cardsOfEachSuits[suit] == 8) {
+            if (quantityCardsOneSuit == 8) {
                 for (Card c :
                         gameBot.hand) {
                     if (c.rank.getValue() == Ranks.ACE.getValue() && c.suit.getValue() != suit) { //find Ace without trump suit
                         countOfAcesNotTrump++;
                     }
                 }
-                if (countOfAcesNotTrump == 1) {
-                    currentContract = "9 " + Suits.values()[suit];
-                } else if (countOfAcesNotTrump == 2) {
-                    currentContract = "10 " + Suits.values()[suit];
-                }
+                currentContract = new ContractWithSuit(quantityCardsOneSuit + countOfAcesNotTrump, Suits.values()[suit]);
             }
         }
         return currentContract;
     }
 
     @Override
-    public String checkElderCardsOfOneSuit(GameBot gameBot) {
+    public Contract checkElderCardsOfOneSuit(GameBot gameBot) {
         int[] suitsCounterArray = countCardsOfCertainSuits(gameBot);
-        return setContract(suitsCounterArray, gameBot);
+        return setContractWithTrump(suitsCounterArray, gameBot);
     }
     @Override
     public int countCurrentCard(GameBot gameBot, Ranks rank, int counterOfWinningCards) {
@@ -56,54 +59,68 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
         return counterOfWinningCards;
     }
     @Override
-    public String checkElderCardsOfAllSuits(GameBot gameBot) {
+    public Contract checkElderCardsOfAllSuits(GameBot gameBot) {
         int counterOfWinningCards = 0;
-        String currentContract = "";
+        Contract currentContract = new Pass(0);
         counterOfWinningCards = countCurrentCard(gameBot, Ranks.ACE, counterOfWinningCards);
         if (counterOfWinningCards == 4) {
             counterOfWinningCards = countCurrentCard(gameBot, Ranks.KING, counterOfWinningCards);
             if (counterOfWinningCards >= 6 && counterOfWinningCards < 8) {
-                currentContract = counterOfWinningCards + "_NO_TRUMP";
+                currentContract = new Contract(counterOfWinningCards);
             }
             if (counterOfWinningCards == 8) {
-                currentContract = counterOfWinningCards + "_NO_TRUMP";
+                currentContract = new Contract(counterOfWinningCards);
                 counterOfWinningCards = countCurrentCard(gameBot, Ranks.QUEEN, counterOfWinningCards);
                 if (counterOfWinningCards > 8) {
-                    currentContract = counterOfWinningCards + "_NO_TRUMP";
+                    currentContract = new Contract(counterOfWinningCards);
                 }
             }
         }
         return currentContract;
     }
     @Override
-    public String checkMisere(GameBot gameBot) {
+    public Contract checkMisere(GameBot gameBot) {
         int quantityOfWinningCards = 0;
         for (Card c :
                 gameBot.hand) {
             if (c.rank.getValue() <= Ranks.NINE.getValue()) quantityOfWinningCards++;
         }
         if (quantityOfWinningCards == 10) {
-            return "MISERE";
+            return new Misere(0);
         }
-        else return "";
+        else return new Pass(0);
     }
+
     @Override
-    public String toTrade(GameBot gameBot, PlayerTradingStrategy playerTradingStrategy) {
-        if (gameBot.getPass()) {
-            return "";
-        }
-        else {
-            if (!playerTradingStrategy.checkElderCardsOfOneSuit(gameBot).equals("")) {
-                return playerTradingStrategy.checkElderCardsOfOneSuit(gameBot);
-            }
-            if (!playerTradingStrategy.checkElderCardsOfAllSuits(gameBot).equals("")) {
-                return playerTradingStrategy.checkElderCardsOfAllSuits(gameBot);
-            }
-            if (!playerTradingStrategy.checkMisere(gameBot).equals("")) {
-                return playerTradingStrategy.checkMisere(gameBot);
+    public Contract checkContract(GameBot gameBot) {
+        Contract contract = new Pass(0);
+        ArrayList<Contract> checkContractArray = new ArrayList<>();
+        checkContractArray.add(checkElderCardsOfAllSuits(gameBot));
+        checkContractArray.add(checkElderCardsOfOneSuit(gameBot));
+        checkContractArray.add(checkMisere(gameBot));
+        for (Contract contractFromArray:
+             checkContractArray) {
+            if (contract.getWeight() < contractFromArray.getWeight()) {
+                contract = contractFromArray;
             }
         }
-        return "";
+        return contract;
+    }
+
+    @Override
+    public Contract toTrade(ArrayList<GameBot> gameBots) {
+        ArrayList<Contract> botsContracts = new ArrayList<>();
+        for (GameBot gameBot:
+                gameBots) {
+            botsContracts.add(checkContract(gameBot));
+        }
+        Contract gameContract = botsContracts.get(0);
+        for (Contract contract:
+                botsContracts) {
+            if (gameContract.getWeight() < contract.getWeight()) {
+                gameContract = contract;
+            }
+        }
+        return gameContract;
     }
 }
-
