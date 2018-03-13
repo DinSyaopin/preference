@@ -7,10 +7,21 @@ public class GameBot {
     public ArrayList<Card> hand = new ArrayList<>();
     private int trick;
     private boolean pass;
+    private int mountain;
+    private int pool;
+
+    public int getTricks() {
+        return trick;
+    }
+
+    public void setTrick(int trick) {
+        this.trick = trick;
+    }
 
     public boolean getPass() {
         return pass;
     }
+
     public int getIntPass() {
         return pass ? 1 : 0;
     }
@@ -19,12 +30,28 @@ public class GameBot {
         this.pass = pass;
     }
 
-    public int getTrick() {
-        return trick;
+    public int getMountain() {
+        return mountain;
     }
 
-    public void setTrick(int trick) {
-        this.trick = trick;
+    public void setMountain(int mountain) {
+        this.mountain = mountain;
+    }
+
+    public void addToMountain(int value) {
+        this.mountain += value;
+    }
+
+    public int getPool() {
+        return pool;
+    }
+
+    public void setPool(int pool) {
+        this.pool = pool;
+    }
+
+    public void addToPool(int value) {
+        this.pool += value;
     }
 
     public GameBot(String botName) {
