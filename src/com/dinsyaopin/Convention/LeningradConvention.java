@@ -8,23 +8,25 @@ import java.util.ArrayList;
 public class LeningradConvention extends Convention {
 
     @Override
-    public int checkMultiplier(Contract contract) {
-        if (contract.getTricks() == 6) {
-            return 2;
+    public int checkPoolMultiplier(Contract contract) {
+        switch (contract.getTricks()) {
+            case 6 : return 2;
+            case 7 : return 4;
+            case 8 : return 6;
+            case 9 : return 10;
+            default: return 0;
         }
-        if (contract.getTricks() == 7) {
-            return 4;
+    }
+
+    @Override
+    public int checkMountainMultiplier(Contract contract) {
+        switch (contract.getTricks()) {
+            case 6 : return 4;
+            case 7 : return 8;
+            case 8 : return 12;
+            case 9 : return 16;
+            default: return 20;
         }
-        if (contract.getTricks() == 8) {
-            return 6;
-        }
-        if (contract.getTricks() == 8) {
-            return 8;
-        }
-        if (contract.getTricks() == 9) {
-            return 10;
-        }
-        return 0;
     }
 
     @Override
@@ -44,13 +46,28 @@ public class LeningradConvention extends Convention {
     public void countTricks(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Contract contract) {
         for (GameBot gameBot:
                 gameBots) {
+            int penalty = contract.getTricks() - gameBot.getTricks();
+
             if (gameBot == gameBotWithContract) {
                 if (gameBot.getTricks() == contract.getTricks()) {
-                    //checkMultiplier
-                    //gameBot.addToPool();
+                    gameBot.addToPool(contract.getTricks() * checkPoolMultiplier(contract));
                 }
-            }
+                else {
 
+                    gameBot.addToMountain(penalty * checkMountainMultiplier(contract));
+                }
+            }/*
+            else {
+                if (gameBot.whisting()) {
+                    if (gameBot.getTricks() == contract.getWhists()) {
+                        gameBot.addToWhists(contract.getTricks() * checkWhistsMultiplier(contract));
+                    }
+                    else {
+                        gameBot.addToMountain(penalty * checkMountainMultiplier(contract) / 2);
+                        gameBot.addToWhists();
+                    }
+                }
+            }*/
         }
     }
 
@@ -60,5 +77,10 @@ public class LeningradConvention extends Convention {
             gameBotWithContract.addToPool(10);
         }
         else gameBotWithContract.addToMountain(gameBotWithContract.getTricks() * 20);
+    }
+
+    @Override
+    public String toString() {
+        return "Leningrad";
     }
 }
