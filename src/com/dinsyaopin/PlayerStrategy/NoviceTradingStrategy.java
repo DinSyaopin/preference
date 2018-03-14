@@ -104,6 +104,9 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
                 contract = contractFromArray;
             }
         }
+        if (!(contract instanceof Pass)) {
+            contract.setWinner(gameBot);//add reference of player to contract
+        }
         return contract;
     }
 

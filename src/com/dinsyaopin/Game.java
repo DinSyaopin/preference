@@ -44,24 +44,20 @@ public class Game {
         gameBots.add(bot1);
         gameBots.add(bot2);
         gameBots.add(bot3);
-        try {
-            Contract contract = playerTradingStrategy.toTrade(gameBots);
-        }
-        catch (NullPointerException ex) {
-            ex.printStackTrace();
-        }
+        Contract contract = playerTradingStrategy.toTrade(gameBots);
         System.out.println("Enter a digit. Convention: Leningrad(0), Rostov(1), Sochi(2)");
         int convention = Integer.parseInt(reader.readLine());
         Convention currentConvention = null;
-        switch (currentStrategy) {
+        switch (convention) {
             case 0 : currentConvention = new LeningradConvention();
             case 1 : currentConvention = new RostovConvention();
             case 2 : currentConvention = new SochiConvention();
         }
 
-        startTurns(gameBots.get(0), gameBots.get(1), gameBots.get(2), currentConvention);
+        //startTurns(gameBots.get(0), gameBots.get(1), gameBots.get(2), currentConvention);
 
         if (contract instanceof Pass) {
+            currentConvention.countPass(gameBots);
             //passes
         }
         else {
@@ -76,7 +72,7 @@ public class Game {
         System.out.println("11");
     }
 
-    public static void startTurns(GameBot bot1, GameBot bot2, GameBot bot3, Convention convention) {
+    /*public static void startTurns(GameBot bot1, GameBot bot2, GameBot bot3, Convention convention) {
         int countOfTurns = 1;
         while (countOfTurns != 9) {
             winnerOfTrading.putCard();
@@ -90,5 +86,5 @@ public class Game {
             countOfTurns++;
 
         }
-    }
+    }*/
 }
