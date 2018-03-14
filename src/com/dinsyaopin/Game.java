@@ -9,82 +9,75 @@ import com.dinsyaopin.PlayerStrategy.NoviceTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.PlayerTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.StudentTradingStrategy;
 import com.dinsyaopin.contracts.Contract;
-import com.dinsyaopin.contracts.Misere;
-import com.dinsyaopin.contracts.Pass;
+import com.dinsyaopin.LogDataInitial;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.dinsyaopin.BotsQuery.countBotsIndexes;
+import static com.dinsyaopin.Configuration.getCurrentConvention;
+import static com.dinsyaopin.Configuration.getPlayerTradingStrategy;
+import static com.dinsyaopin.Configuration.getPool;
 
 public class Game {
+    private GameBot bot1;
+    private GameBot bot2;
+    private GameBot bot3;
+    private ArrayList<LogData> logData;
+    private LogDataInitial logDataInitial;
 
-    public int countOfTurns;
-    public GameBot winnerOfTrading = null;
-    public static void main(String[] args) throws IOException {
-        Dealer dealer = new Dealer();
-        GameBot bot1 = new GameBot("Player1");
-        GameBot bot2 = new GameBot("Player2");
-        GameBot bot3 = new GameBot("Player3");
-        dealer.initializeDeck();
-        dealer.giveCardsToPlayer(bot1);
-        dealer.giveCardsToPlayer(bot2);
-        dealer.giveCardsToPlayer(bot3);
-        //players have cards on their hands
-        System.out.println("Enter a digit. Level of player: novice(0), student(1), master(2)");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int currentStrategy = Integer.parseInt(reader.readLine());
-        PlayerTradingStrategy playerTradingStrategy = null;
-        switch (currentStrategy) {
-            case 0 : playerTradingStrategy = new NoviceTradingStrategy();
-            case 1 : playerTradingStrategy = new StudentTradingStrategy();
-            case 2 : playerTradingStrategy = new MasterTradingStrategy();
-        }
+    public void startGame() throws IOException {
+        logData = new ArrayList<>();
+        logData.add(logDataInitial);
+
+        PlayerTradingStrategy playerTradingStrategy = getPlayerTradingStrategy();
+        Convention convention = getCurrentConvention();
+        startGame(playerTradingStrategy, convention);
+    }
+
+    private void startGame(PlayerTradingStrategy playerTradingStrategy, Convention convention) throws IOException {
+        int pool = getPool();
+        logDataInitial.setPool(pool);
+        bot1 = new GameBot("Player1");
+        bot2 = new GameBot("Player2");
+        bot3 = new GameBot("Player3");
+        logDataInitial.setGameBot1Name(bot1.getBotName());
+        logDataInitial.setGameBot2Name(bot2.getBotName());
+        logDataInitial.setGameBot3Name(bot3.getBotName());
         ArrayList<GameBot> gameBots = new ArrayList<>();
         gameBots.add(bot1);
         gameBots.add(bot2);
         gameBots.add(bot3);
-        Contract contract = playerTradingStrategy.toTrade(gameBots);
-        System.out.println("Enter a digit. Convention: Leningrad(0), Rostov(1), Sochi(2)");
-        int convention = Integer.parseInt(reader.readLine());
-        Convention currentConvention = null;
-        switch (convention) {
-            case 0 : currentConvention = new LeningradConvention();
-            case 1 : currentConvention = new RostovConvention();
-            case 2 : currentConvention = new SochiConvention();
-        }
+        Dealer dealer = new Dealer();
 
-        //startTurns(gameBots.get(0), gameBots.get(1), gameBots.get(2), currentConvention);
+        int currentBot = -1;
 
-        if (contract instanceof Pass) {
-            currentConvention.countPass(gameBots);
-            //passes
-        }
-        else {
-            //whisting
-        }
-        //trader.gameBots.add(bot1);
-        //trader.gameBots.add(bot2);
-        //trader.gameBots.add(bot3);
-        //String contract = trader.toTrade(); //take contract from trading of players
+        while (bot1.getPool() != pool || bot2.getPool() != pool || bot3.getPool() != pool) {
 
-        //game.startGame(bot1, bot2, bot3);
-        System.out.println("11");
-    }
+            dealer.initializeDeck();
+            dealer.giveCardsToPlayer(bot1);
+            dealer.giveCardsToPlayer(bot2);
+            dealer.giveCardsToPlayer(bot3);
+            ArrayList<GameBot> botsQuered = new ArrayList<>();
 
-    /*public static void startTurns(GameBot bot1, GameBot bot2, GameBot bot3, Convention convention) {
-        int countOfTurns = 1;
-        while (countOfTurns != 9) {
-            winnerOfTrading.putCard();
-            if (!bot1.equals(winnerOfTrading)) {
-                bot1.putCard();
-            } else if (!bot2.equals(winnerOfTrading)) {
-                bot2.putCard();
-            } else {
-                bot3.putCard();
+            int[] botsIndexes = countBotsIndexes(currentBot + 1);
+
+            for (int i = 0; i < 2; i++) {
+                botsQuered.add(gameBots.get(botsIndexes[i]));
             }
-            countOfTurns++;
+            if (currentBot == 0) {
+                Contract winnerContract = playerTradingStrategy.toTrade(botsQuered);
+            }
+            else {
 
+            }
+            currentBot++;
+            if (currentBot == 1) {
+                currentBot = -1;
+            }
         }
-    }*/
+    }
 }

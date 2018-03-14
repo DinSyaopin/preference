@@ -1,8 +1,11 @@
 package com.dinsyaopin;
 
+import com.dinsyaopin.contracts.Contract;
+
 import java.util.ArrayList;
 
 public class GameBot {
+
     public String botName;
     public ArrayList<Card> hand = new ArrayList<>();
     private int trick;
@@ -76,7 +79,7 @@ public class GameBot {
         }
     }*/
 
-    public void putCard() {
+    public void putCard(Contract contract) {
 
     }
 
