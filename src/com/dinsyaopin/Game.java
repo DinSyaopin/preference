@@ -1,22 +1,14 @@
 package com.dinsyaopin;
 
 import com.dinsyaopin.Convention.Convention;
-import com.dinsyaopin.Convention.LeningradConvention;
-import com.dinsyaopin.Convention.RostovConvention;
-import com.dinsyaopin.Convention.SochiConvention;
-import com.dinsyaopin.PlayerStrategy.MasterTradingStrategy;
-import com.dinsyaopin.PlayerStrategy.NoviceTradingStrategy;
+import com.dinsyaopin.Log.LogData;
 import com.dinsyaopin.PlayerStrategy.PlayerTradingStrategy;
-import com.dinsyaopin.PlayerStrategy.StudentTradingStrategy;
 import com.dinsyaopin.contracts.Contract;
-import com.dinsyaopin.LogDataInitial;
+import com.dinsyaopin.Log.LogDataInitial;
 import com.dinsyaopin.contracts.Pass;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.dinsyaopin.BotsQuery.countBotsIndexes;
 import static com.dinsyaopin.Configuration.getCurrentConvention;

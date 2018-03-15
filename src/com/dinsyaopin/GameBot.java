@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class GameBot {
 
-    public String botName;
-    public ArrayList<Card> hand = new ArrayList<>();
+    private String botName;
+    private ArrayList<Card> hand = new ArrayList<>();
     private int trick;
     private boolean pass;
     private int mountain;
@@ -78,10 +78,10 @@ public class GameBot {
             hand.add(deck.getRandomCardFromDeck()); //здесь надо подумать, может быть разместить карты прикупа на столе и со стола забирать а не из колоды?
         }
     }*/
-
+    /*
     public void putCard(Contract contract) {
 
-    }
+    }*/
 
 
 }

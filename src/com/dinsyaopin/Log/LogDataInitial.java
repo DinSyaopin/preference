@@ -1,13 +1,15 @@
-package com.dinsyaopin;
+package com.dinsyaopin.Log;
+
+import com.dinsyaopin.GameBot;
 
 public class LogDataInitial extends LogData {
     private int pool;
-    GameBot gameBot1;
-    GameBot gameBot2;
-    GameBot gameBot3;
-    String gameBot1Name;
-    String gameBot2Name;
-    String gameBot3Name;
+    protected GameBot gameBot1;
+    protected GameBot gameBot2;
+    protected GameBot gameBot3;
+    protected String gameBot1Name;
+    protected String gameBot2Name;
+    protected String gameBot3Name;
     public int getPool() {
         return pool;
     }

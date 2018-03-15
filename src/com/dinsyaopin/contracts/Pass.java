@@ -1,10 +1,10 @@
 package com.dinsyaopin.contracts;
 
 public class Pass extends Contract {
-    public final int weight = 0;
+    private static final int WEIGHT = 0;
 
     public int getWeight() {
-        return weight;
+        return WEIGHT;
     }
 
     public Pass(int tricks) {

@@ -1,11 +1,11 @@
 package com.dinsyaopin.contracts;
 
 public class Misere extends Contract {
-    public final int weight = 16;
+    private static final int WEIGHT = 16;
 
     @Override
     public int getWeight() {
-        return weight;
+        return WEIGHT;
     }
 
     public Misere(int tricks) {
