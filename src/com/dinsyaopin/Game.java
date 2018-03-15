@@ -10,6 +10,7 @@ import com.dinsyaopin.PlayerStrategy.PlayerTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.StudentTradingStrategy;
 import com.dinsyaopin.contracts.Contract;
 import com.dinsyaopin.LogDataInitial;
+import com.dinsyaopin.contracts.Pass;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class Game {
     private GameBot bot2;
     private GameBot bot3;
     private ArrayList<LogData> logData;
-    private LogDataInitial logDataInitial;
+    private LogDataInitial logDataInitial = new LogDataInitial();
 
     public void startGame() throws IOException {
         logData = new ArrayList<>();
@@ -61,19 +62,32 @@ public class Game {
             dealer.giveCardsToPlayer(bot1);
             dealer.giveCardsToPlayer(bot2);
             dealer.giveCardsToPlayer(bot3);
-            ArrayList<GameBot> botsQuered = new ArrayList<>();
+            ArrayList<GameBot> botsQueue = new ArrayList<>();
 
             int[] botsIndexes = countBotsIndexes(currentBot + 1);
 
             for (int i = 0; i < 2; i++) {
-                botsQuered.add(gameBots.get(botsIndexes[i]));
+                botsQueue.add(gameBots.get(botsIndexes[i]));
             }
-            if (currentBot == 0) {
-                Contract winnerContract = playerTradingStrategy.toTrade(botsQuered);
-            }
-            else {
+            Contract winnerContract = playerTradingStrategy.toTrade(botsQueue);
+            int countOfTurns = 10;
+            for (int i = 0; i < countOfTurns; i++) {
+                Table table = new Table(winnerContract);
+                if (winnerContract instanceof Pass) {
 
+                }
+                else {
+
+                    //table.addCard(botsQueue.get(0).);
+                    //table.addCard(botsQueue.get(0).);
+                    //table.addCard(botsQueue.get(0).);
+                }
             }
+            if (winnerContract instanceof Pass) {
+                convention.countPass(gameBots);
+            }
+
+
             currentBot++;
             if (currentBot == 1) {
                 currentBot = -1;
