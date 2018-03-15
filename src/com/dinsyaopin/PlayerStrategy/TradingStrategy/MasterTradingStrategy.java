@@ -1,4 +1,4 @@
-package com.dinsyaopin.PlayerStrategy;
+package com.dinsyaopin.PlayerStrategy.TradingStrategy;
 
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Ranks;
@@ -6,7 +6,7 @@ import com.dinsyaopin.contracts.Contract;
 
 import java.util.ArrayList;
 
-public class StudentTradingStrategy implements PlayerTradingStrategy {
+public class MasterTradingStrategy implements PlayerTradingStrategy {
     @Override
     public int[] countCardsOfCertainSuits(GameBot gameBot) {
         return new int[0];

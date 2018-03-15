@@ -4,16 +4,18 @@ import com.dinsyaopin.Convention.Convention;
 import com.dinsyaopin.Convention.LeningradConvention;
 import com.dinsyaopin.Convention.RostovConvention;
 import com.dinsyaopin.Convention.SochiConvention;
-import com.dinsyaopin.PlayerStrategy.MasterTradingStrategy;
-import com.dinsyaopin.PlayerStrategy.NoviceTradingStrategy;
-import com.dinsyaopin.PlayerStrategy.PlayerTradingStrategy;
-import com.dinsyaopin.PlayerStrategy.StudentTradingStrategy;
+import com.dinsyaopin.PlayerStrategy.TradingStrategy.MasterTradingStrategy;
+import com.dinsyaopin.PlayerStrategy.TradingStrategy.NoviceTradingStrategy;
+import com.dinsyaopin.PlayerStrategy.TradingStrategy.PlayerTradingStrategy;
+import com.dinsyaopin.PlayerStrategy.TradingStrategy.StudentTradingStrategy;
+import com.dinsyaopin.PlayerStrategy.TurnsStrategy.MasterTurnsStrategy;
+import com.dinsyaopin.PlayerStrategy.TurnsStrategy.NoviceTurnsStrategy;
+import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
+import com.dinsyaopin.PlayerStrategy.TurnsStrategy.StudentTurnsStrategy;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class Configuration {
 
@@ -21,6 +23,21 @@ public class Configuration {
         System.out.println("Enter a value of pool.");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         return Integer.parseInt(reader.readLine());
+    }
+
+    public static PlayerTurnsStrategy getPlayerTurnsStrategy() throws IOException {
+        System.out.println("Enter a digit. Level of player: novice(0), student(1), master(2)");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int currentStrategy = Integer.parseInt(reader.readLine());
+        PlayerTurnsStrategy playerTurnsStrategy = null;
+        switch (currentStrategy) {
+            case 0:
+                playerTurnsStrategy = new NoviceTurnsStrategy();
+                playerTurnsStrategy = new StudentTurnsStrategy();
+                playerTurnsStrategy = new MasterTurnsStrategy();
+        }
+        return playerTurnsStrategy;
+        //Need refactoring. Read strategy pattern again.
     }
 
     public static PlayerTradingStrategy getPlayerTradingStrategy() throws IOException {

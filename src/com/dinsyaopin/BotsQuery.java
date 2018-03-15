@@ -1,7 +1,5 @@
 package com.dinsyaopin;
 
-import java.util.ArrayList;
-
 public class BotsQuery {
     public static int[] countBotsIndexes(int nextBot) {
         int[] botsIndexes = new int[3];

@@ -2,7 +2,8 @@ package com.dinsyaopin;
 
 import com.dinsyaopin.Convention.Convention;
 import com.dinsyaopin.Log.LogData;
-import com.dinsyaopin.PlayerStrategy.PlayerTradingStrategy;
+import com.dinsyaopin.PlayerStrategy.TradingStrategy.PlayerTradingStrategy;
+import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
 import com.dinsyaopin.contracts.Contract;
 import com.dinsyaopin.Log.LogDataInitial;
 import com.dinsyaopin.contracts.Pass;
@@ -27,6 +28,7 @@ public class Game {
         logData.add(logDataInitial);
 
         PlayerTradingStrategy playerTradingStrategy = getPlayerTradingStrategy();
+        PlayerTurnsStrategy playerTurnsStrategy = getPlayerTurnsStrategy();
         Convention convention = getCurrentConvention();
         startGame(playerTradingStrategy, convention);
     }
@@ -66,7 +68,7 @@ public class Game {
             for (int i = 0; i < countOfTurns; i++) {
                 Table table = new Table(winnerContract);
                 if (winnerContract instanceof Pass) {
-
+                    botsQueue.get(0).
                 }
                 else {
 

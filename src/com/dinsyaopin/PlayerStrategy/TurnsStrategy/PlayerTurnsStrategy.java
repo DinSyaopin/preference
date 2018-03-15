@@ -1,4 +1,4 @@
-package com.dinsyaopin.PlayerStrategy;
+package com.dinsyaopin.PlayerStrategy.TurnsStrategy;
 
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.contracts.Contract;

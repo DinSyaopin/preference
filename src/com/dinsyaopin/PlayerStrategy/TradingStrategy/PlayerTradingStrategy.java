@@ -1,4 +1,4 @@
-package com.dinsyaopin.PlayerStrategy;
+package com.dinsyaopin.PlayerStrategy.TradingStrategy;
 
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Ranks;
