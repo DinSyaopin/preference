@@ -26,32 +26,38 @@ public class Configuration {
     }
 
     public static PlayerTurnsStrategy getPlayerTurnsStrategy() throws IOException {
-        System.out.println("Enter a digit. Level of player: novice(0), student(1), master(2)");
+        System.out.println("Enter a digit. Level of player in turn: novice(0), student(1), master(2)");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int currentStrategy = Integer.parseInt(reader.readLine());
         PlayerTurnsStrategy playerTurnsStrategy = null;
         switch (currentStrategy) {
             case 0:
-                playerTurnsStrategy = new NoviceTurnsStrategy();
-                playerTurnsStrategy = new StudentTurnsStrategy();
-                playerTurnsStrategy = new MasterTurnsStrategy();
+                playerTurnsStrategy = new NoviceTurnsStrategy(); break;
+            case 1:
+                playerTurnsStrategy = new StudentTurnsStrategy(); break;
+            case 2:
+                playerTurnsStrategy = new MasterTurnsStrategy(); break;
+            default:
+                playerTurnsStrategy = new NoviceTurnsStrategy(); break;
         }
         return playerTurnsStrategy;
         //Need refactoring. Read strategy pattern again.
     }
 
     public static PlayerTradingStrategy getPlayerTradingStrategy() throws IOException {
-        System.out.println("Enter a digit. Level of player: novice(0), student(1), master(2)");
+        System.out.println("Enter a digit. Level of player in trading: novice(0), student(1), master(2)");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int currentStrategy = Integer.parseInt(reader.readLine());
         PlayerTradingStrategy playerTradingStrategy = null;
         switch (currentStrategy) {
             case 0:
-                playerTradingStrategy = new NoviceTradingStrategy();
+                playerTradingStrategy = new NoviceTradingStrategy(); break;
             case 1:
-                playerTradingStrategy = new StudentTradingStrategy();
+                playerTradingStrategy = new StudentTradingStrategy(); break;
             case 2:
-                playerTradingStrategy = new MasterTradingStrategy();
+                playerTradingStrategy = new MasterTradingStrategy(); break;
+            default:
+                playerTradingStrategy = new NoviceTradingStrategy(); break;
         }
         return playerTradingStrategy;
     }
@@ -63,11 +69,13 @@ public class Configuration {
         Convention currentConvention = null;
         switch (convention) {
             case 0:
-                currentConvention = new LeningradConvention();
+                currentConvention = new LeningradConvention(); break;
             case 1:
-                currentConvention = new RostovConvention();
+                currentConvention = new RostovConvention(); break;
             case 2:
-                currentConvention = new SochiConvention();
+                currentConvention = new SochiConvention(); break;
+            default:
+                currentConvention = new LeningradConvention(); break;
         }
         return currentConvention;
     }

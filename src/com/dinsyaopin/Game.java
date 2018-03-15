@@ -58,7 +58,7 @@ public class Game {
 
             int[] botsIndexes = countBotsIndexes(currentBot + 1);
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i <= 2; i++) {
                 botsQueue.add(gameBots.get(botsIndexes[i]));
             }
 
