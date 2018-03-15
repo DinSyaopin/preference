@@ -15,7 +15,7 @@ public class Table {
     public void addCard(Card card) {
         cards.add(card);
     }
-    public GameBot showTurnWinner(ArrayList<Card> cards) {
+    public GameBot showTurnWinner(ArrayList<GameBot> gameBots) {
 
         return null;
     }

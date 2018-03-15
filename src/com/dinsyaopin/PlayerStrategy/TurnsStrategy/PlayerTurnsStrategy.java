@@ -1,12 +1,13 @@
 package com.dinsyaopin.PlayerStrategy.TurnsStrategy;
 
+import com.dinsyaopin.Card;
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.contracts.Contract;
 
 public interface PlayerTurnsStrategy {
-    public void putCard(Contract winnerContract);
-    public void putPass(GameBot gameBot);
-    public void putMisere();
-    public void putNoTrump();
-    public void putTrump();
+    //public Card putCard(Contract winnerContract);
+    public Card putPass(GameBot gameBot);
+    public Card putMisere();
+    public Card putNoTrump();
+    public Card putTrump();
 }

@@ -21,6 +21,10 @@ public class GameBot {
         this.trick = trick;
     }
 
+    public void addTrick() {
+        this.trick++;
+    }
+
     public boolean getPass() {
         return pass;
     }

@@ -12,9 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.dinsyaopin.BotsQuery.countBotsIndexes;
-import static com.dinsyaopin.Configuration.getCurrentConvention;
-import static com.dinsyaopin.Configuration.getPlayerTradingStrategy;
-import static com.dinsyaopin.Configuration.getPool;
+import static com.dinsyaopin.Configuration.*;
 
 public class Game {
     private GameBot bot1;
@@ -30,10 +28,10 @@ public class Game {
         PlayerTradingStrategy playerTradingStrategy = getPlayerTradingStrategy();
         PlayerTurnsStrategy playerTurnsStrategy = getPlayerTurnsStrategy();
         Convention convention = getCurrentConvention();
-        startGame(playerTradingStrategy, convention);
+        startGame(playerTradingStrategy, playerTurnsStrategy, convention);
     }
 
-    private void startGame(PlayerTradingStrategy playerTradingStrategy, Convention convention) throws IOException {
+    private void startGame(PlayerTradingStrategy playerTradingStrategy, PlayerTurnsStrategy playerTurnsStrategy, Convention convention) throws IOException {
         int pool = getPool();
         logDataInitial.setPool(pool);
         bot1 = new GameBot("Player1");
@@ -63,12 +61,37 @@ public class Game {
             for (int i = 0; i < 2; i++) {
                 botsQueue.add(gameBots.get(botsIndexes[i]));
             }
+
             Contract winnerContract = playerTradingStrategy.toTrade(botsQueue);
+            GameBot currentWinner = null;
             int countOfTurns = 10;
+            int indexOfCurrentWinner = 0;
+
             for (int i = 0; i < countOfTurns; i++) {
+
                 Table table = new Table(winnerContract);
+
                 if (winnerContract instanceof Pass) {
-                    botsQueue.get(0).
+                    if (currentWinner == null) {
+                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(0)));
+                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(1)));
+                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(2)));
+                        currentWinner = table.showTurnWinner(botsQueue);
+                        currentWinner.addTrick();
+                        indexOfCurrentWinner = botsQueue.indexOf(currentWinner);
+                    }
+                    else {//sorting array with currentWinner as 0 element
+                        botsIndexes = countBotsIndexes(indexOfCurrentWinner);
+                        for (int j = 0; i < 2; i++) {
+                            botsQueue.add(gameBots.get(botsIndexes[j]));
+                        }
+                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(0)));
+                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(1)));
+                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(2)));
+                        currentWinner = table.showTurnWinner(botsQueue);
+                        currentWinner.addTrick();
+                        indexOfCurrentWinner = botsQueue.indexOf(currentWinner);
+                    }
                 }
                 else {
 
