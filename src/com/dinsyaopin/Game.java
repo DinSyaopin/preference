@@ -74,7 +74,7 @@ public class Game {
                 if (winnerContract instanceof Pass) {
                     if (currentWinner == null) {
                         table.addCard(playerTurnsStrategy.putPass(botsQueue.get(0)));
-                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(1)));
+                        //table.addCard(playerTurnsStrategy.putPass(botsQueue.get(1), Su));
                         table.addCard(playerTurnsStrategy.putPass(botsQueue.get(2)));
                         currentWinner = table.showTurnWinner(botsQueue);
                         currentWinner.addTrick();
