@@ -12,10 +12,15 @@ public class NoviceTurnsStrategy implements PlayerTurnsStrategy {
     @Override
     public Card putPass(GameBot gameBot) {
         Random random = new Random();
-        int randomCard = random.nextInt() * gameBot.hand.size();
-        Card card = gameBot.hand.get(randomCard);
-        gameBot.hand.remove(randomCard);
+        int randomCard = random.nextInt() * gameBot.getHand().size();
+        Card card = gameBot.getHand().get(randomCard);
+        gameBot.getHand().remove(randomCard);
         return card;
+    }
+
+    @Override
+    public Card putCard(Contract winnerContract) {
+        return null;
     }
 
     @Override

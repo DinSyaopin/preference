@@ -40,6 +40,9 @@ public class Game {
         logDataInitial.setGameBot1Name(bot1.getBotName());
         logDataInitial.setGameBot2Name(bot2.getBotName());
         logDataInitial.setGameBot3Name(bot3.getBotName());
+        bot1.setPlayerTurnsStrategy(playerTurnsStrategy);
+        bot2.setPlayerTurnsStrategy(playerTurnsStrategy);
+        bot3.setPlayerTurnsStrategy(playerTurnsStrategy);
         ArrayList<GameBot> gameBots = new ArrayList<>();
         gameBots.add(bot1);
         gameBots.add(bot2);
@@ -69,13 +72,14 @@ public class Game {
 
             for (int i = 0; i < countOfTurns; i++) {
 
-                Table table = new Table(winnerContract);
+                Table table = new Table();
 
                 if (winnerContract instanceof Pass) {
                     if (currentWinner == null) {
-                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(0)));
-                        //table.addCard(playerTurnsStrategy.putPass(botsQueue.get(1), Su));
-                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(2)));
+                        botsQueue.get(0).putCard(table, winnerContract);//putCard() надо дописать
+                        Suits turnSuit = table.getFirstCard().suit;
+                        botsQueue.get(1).putCard(table, winnerContract);
+                        botsQueue.get(2).putCard(table, winnerContract);
                         currentWinner = table.showTurnWinner(botsQueue);
                         currentWinner.addTrick();
                         indexOfCurrentWinner = botsQueue.indexOf(currentWinner);
@@ -86,6 +90,7 @@ public class Game {
                             botsQueue.add(gameBots.get(botsIndexes[j]));
                         }
                         table.addCard(playerTurnsStrategy.putPass(botsQueue.get(0)));
+
                         table.addCard(playerTurnsStrategy.putPass(botsQueue.get(1)));
                         table.addCard(playerTurnsStrategy.putPass(botsQueue.get(2)));
                         currentWinner = table.showTurnWinner(botsQueue);

@@ -16,7 +16,7 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
     public int[] countCardsOfCertainSuits(GameBot gameBot) {
         int[] cardsOfEachSuits = {0, 0, 0, 0};
         for (Card c:
-                gameBot.hand) {
+                gameBot.getHand()) {
                 cardsOfEachSuits[c.suit.getValue()]++;
         }
         return cardsOfEachSuits;
@@ -34,7 +34,7 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
             }
             if (quantityCardsOneSuit == 8) {
                 for (Card c :
-                        gameBot.hand) {
+                        gameBot.getHand()) {
                     if (c.rank.getValue() == Ranks.ACE.getValue() && c.suit.getValue() != suit) { //find Ace without trump suit
                         countOfAcesNotTrump++;
                     }
@@ -53,7 +53,7 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
     @Override
     public int countCurrentCard(GameBot gameBot, Ranks rank, int counterOfWinningCards) {
         for (Card c :
-                gameBot.hand) {
+                gameBot.getHand()) {
             if (c.rank.getValue() == rank.getValue()) counterOfWinningCards++;
         }
         return counterOfWinningCards;
@@ -82,7 +82,7 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
     public Contract checkMisere(GameBot gameBot) {
         int quantityOfWinningCards = 0;
         for (Card c :
-                gameBot.hand) {
+                gameBot.getHand()) {
             if (c.rank.getValue() <= Ranks.NINE.getValue()) quantityOfWinningCards++;
         }
         if (quantityOfWinningCards == 10) {

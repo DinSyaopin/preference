@@ -6,7 +6,7 @@ import com.dinsyaopin.Suits;
 import com.dinsyaopin.contracts.Contract;
 
 public interface PlayerTurnsStrategy {
-    //public Card putCard(Contract winnerContract);
+    public Card putCard(Contract winnerContract);
     public Card putPass(GameBot gameBot);
     public Card putPass(GameBot gameBot, Suits suit);
     public Card putMisere();

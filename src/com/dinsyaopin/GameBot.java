@@ -1,5 +1,6 @@
 package com.dinsyaopin;
 
+import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
 import com.dinsyaopin.contracts.Contract;
 
 import java.util.ArrayList;
@@ -7,11 +8,20 @@ import java.util.ArrayList;
 public class GameBot {
 
     private String botName;
-    public ArrayList<Card> hand = new ArrayList<>();
+    private ArrayList<Card> hand = new ArrayList<>();
     private int trick;
     private boolean pass;
     private int mountain;
     private int pool;
+    private PlayerTurnsStrategy playerTurnsStrategy;
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
+    }
 
     public int getTricks() {
         return trick;
@@ -69,6 +79,14 @@ public class GameBot {
         return botName;
     }
 
+    public PlayerTurnsStrategy getPlayerTurnsStrategy() {
+        return playerTurnsStrategy;
+    }
+
+    public void setPlayerTurnsStrategy(PlayerTurnsStrategy playerTurnsStrategy) {
+        this.playerTurnsStrategy = playerTurnsStrategy;
+    }
+
     public ArrayList<Card> initializeHand(Deck deck) {
         ArrayList<Card> hand = new ArrayList<>();
         for (int i = 0; i < 10 ; i++) {
@@ -83,8 +101,11 @@ public class GameBot {
         }
     }*/
 
-    public void putCard(Contract contract, Table table) {
-        table.addCard(hand.get(0));
-        hand.remove(0);
+    public Card putCard(Table table, Contract contract) {
+        playerTurnsStrategy.putCard(contract);//need to take index of card in hand
+        Card card = getHand().get(0);//get(indexOfCountedCard)
+        table.addCard(card);
+        getHand().remove(0);//indexOfCountedCard
+        return card;
     }
 }
