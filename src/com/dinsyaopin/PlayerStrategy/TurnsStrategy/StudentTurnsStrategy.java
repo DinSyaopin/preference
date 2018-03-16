@@ -4,36 +4,29 @@ import com.dinsyaopin.Card;
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Suits;
 import com.dinsyaopin.contracts.Contract;
+import com.dinsyaopin.contracts.ContractWithSuit;
+import com.dinsyaopin.contracts.Misere;
+import com.dinsyaopin.contracts.Pass;
 
 public class StudentTurnsStrategy implements PlayerTurnsStrategy {
 
     @Override
-    public Card putPass(GameBot gameBot) {
+    public Card putCard(Contract contract, GameBot gameBot, Suits suit) {
         return null;
     }
 
     @Override
-    public Card putCard(Contract winnerContract) {
+    public Card putCard(Pass pass, GameBot gameBot, Suits suit) {
         return null;
     }
 
     @Override
-    public Card putPass(GameBot gameBot, Suits suit) {
+    public Card putCard(Misere misere, GameBot gameBot, Suits suit) {
         return null;
     }
 
     @Override
-    public Card putMisere() {
-        return null;
-    }
-
-    @Override
-    public Card putNoTrump() {
-        return null;
-    }
-
-    @Override
-    public Card putTrump() {
+    public Card putCard(ContractWithSuit contractWithSuit, GameBot gameBot, Suits suit) {
         return null;
     }
 }

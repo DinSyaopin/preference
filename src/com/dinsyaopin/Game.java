@@ -79,31 +79,32 @@ public class Game {
                 //table chooses trick winner
                 //convention counts points
 
-                if (winnerContract instanceof Pass) {
-                    if (currentWinner == null) {
-                        bots.get(0).putCard(table, winnerContract);//putCard() надо дописать
-                        Suits turnSuit = table.getFirstCard().suit;
-                        bots.get(1).putCard(table, winnerContract);
-                        bots.get(2).putCard(table, winnerContract);
-                        currentWinner = table.showTurnWinner(bots);//проверить метод
-                        currentWinner.addTrick();//проверить метод
-                        indexOfCurrentWinner = bots.indexOf(currentWinner);//работает
-                    }
-                    else {//sorting array with currentWinner as 0 element
-                        botsIndexes = countBotsIndexes(indexOfCurrentWinner);
-                        for (int j = 0; i < 2; i++) {
-                            bots.add(gameBots.get(botsIndexes[j]));
-                        }
-                        table.addCard(playerTurnsStrategy.putPass(bots.get(0)));
-
-                        table.addCard(playerTurnsStrategy.putPass(bots.get(1)));
-                        table.addCard(playerTurnsStrategy.putPass(bots.get(2)));
-                        currentWinner = table.showTurnWinner(bots);
-                        currentWinner.addTrick();
-                        indexOfCurrentWinner = bots.indexOf(currentWinner);
-                    }
-                    convention.countPass(bots);
+                if (currentWinner == null) {
+                    bots.get(0).putCard(table, winnerContract, null);//putCard() надо дописать
+                    Suits turnSuit = table.getFirstCard().suit;
+                    bots.get(1).putCard(table, winnerContract, turnSuit);
+                    bots.get(2).putCard(table, winnerContract, turnSuit);
+                    currentWinner = table.showTurnWinner(bots);//проверить метод
+                    currentWinner.addTrick();//проверить метод
+                    indexOfCurrentWinner = bots.indexOf(currentWinner);//работает
                 }
+                else {//sorting array with currentWinner as 0 element
+                    botsIndexes = countBotsIndexes(indexOfCurrentWinner);
+                    for (int j = 0; i < 2; i++) {
+                        bots.add(gameBots.get(botsIndexes[j]));
+                    }
+                    /*
+                    table.addCard(playerTurnsStrategy.putPass(bots.get(0)));
+
+                    table.addCard(playerTurnsStrategy.putPass(bots.get(1)));
+                    table.addCard(playerTurnsStrategy.putPass(bots.get(2)));
+                    currentWinner = table.showTurnWinner(bots);
+                    currentWinner.addTrick();
+                    indexOfCurrentWinner = bots.indexOf(currentWinner);
+                    */
+                }
+                convention.countPass(bots);
+                /*
                 else if (winnerContract instanceof Contract) {
                     //some code
                     convention.countTricks(bots, bots.get(0), winnerContract);//pseudo
@@ -113,7 +114,7 @@ public class Game {
                 }
                 else if (winnerContract instanceof Misere){
                     convention.countMisere(bots.get(0));//pseudo
-                }
+                }*/
             }
 
             //shitcode moves bots in array for next turn

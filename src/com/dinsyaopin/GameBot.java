@@ -101,11 +101,8 @@ public class GameBot {
         }
     }*/
 
-    public Card putCard(Table table, Contract contract) {
-        playerTurnsStrategy.putCard(contract);//need to take index of card in hand
-        Card card = getHand().get(0);//get(indexOfCountedCard)
+    public void putCard(Table table, Contract contract, Suits suit) {
+        Card card = playerTurnsStrategy.putCard(contract, this, suit);
         table.addCard(card);
-        getHand().remove(0);//indexOfCountedCard
-        return card;
     }
 }
