@@ -6,6 +6,8 @@ import com.dinsyaopin.PlayerStrategy.TradingStrategy.PlayerTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
 import com.dinsyaopin.contracts.Contract;
 import com.dinsyaopin.Log.LogDataInitial;
+import com.dinsyaopin.contracts.ContractWithSuit;
+import com.dinsyaopin.contracts.Misere;
 import com.dinsyaopin.contracts.Pass;
 
 import java.io.IOException;
@@ -57,59 +59,64 @@ public class Game {
             dealer.giveCardsToPlayer(bot1);
             dealer.giveCardsToPlayer(bot2);
             dealer.giveCardsToPlayer(bot3);
-            ArrayList<GameBot> botsQueue = new ArrayList<>();
+            ArrayList<GameBot> bots = new ArrayList<>();
 
             int[] botsIndexes = countBotsIndexes(currentBot + 1);
 
             for (int i = 0; i <= 2; i++) {
-                botsQueue.add(gameBots.get(botsIndexes[i]));
+                bots.add(gameBots.get(botsIndexes[i]));
             }
 
-            Contract winnerContract = playerTradingStrategy.toTrade(botsQueue);
+            Contract winnerContract = playerTradingStrategy.toTrade(bots);
             GameBot currentWinner = null;
             int countOfTurns = 10;
             int indexOfCurrentWinner = 0;
 
-            for (int i = 0; i < countOfTurns; i++) {
-
+            for (int i = 0; i < countOfTurns; i++) {//turns
+                //initialize table every turn
                 Table table = new Table();
+                //players put cards
+                //table chooses trick winner
+                //convention counts points
 
                 if (winnerContract instanceof Pass) {
                     if (currentWinner == null) {
-                        botsQueue.get(0).putCard(table, winnerContract);//putCard() надо дописать
+                        bots.get(0).putCard(table, winnerContract);//putCard() надо дописать
                         Suits turnSuit = table.getFirstCard().suit;
-                        botsQueue.get(1).putCard(table, winnerContract);
-                        botsQueue.get(2).putCard(table, winnerContract);
-                        currentWinner = table.showTurnWinner(botsQueue);
-                        currentWinner.addTrick();
-                        indexOfCurrentWinner = botsQueue.indexOf(currentWinner);
+                        bots.get(1).putCard(table, winnerContract);
+                        bots.get(2).putCard(table, winnerContract);
+                        currentWinner = table.showTurnWinner(bots);//проверить метод
+                        currentWinner.addTrick();//проверить метод
+                        indexOfCurrentWinner = bots.indexOf(currentWinner);//работает
                     }
                     else {//sorting array with currentWinner as 0 element
                         botsIndexes = countBotsIndexes(indexOfCurrentWinner);
                         for (int j = 0; i < 2; i++) {
-                            botsQueue.add(gameBots.get(botsIndexes[j]));
+                            bots.add(gameBots.get(botsIndexes[j]));
                         }
-                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(0)));
+                        table.addCard(playerTurnsStrategy.putPass(bots.get(0)));
 
-                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(1)));
-                        table.addCard(playerTurnsStrategy.putPass(botsQueue.get(2)));
-                        currentWinner = table.showTurnWinner(botsQueue);
+                        table.addCard(playerTurnsStrategy.putPass(bots.get(1)));
+                        table.addCard(playerTurnsStrategy.putPass(bots.get(2)));
+                        currentWinner = table.showTurnWinner(bots);
                         currentWinner.addTrick();
-                        indexOfCurrentWinner = botsQueue.indexOf(currentWinner);
+                        indexOfCurrentWinner = bots.indexOf(currentWinner);
                     }
+                    convention.countPass(bots);
                 }
-                else {
-
-                    //table.addCard(botsQueue.get(0).);
-                    //table.addCard(botsQueue.get(0).);
-                    //table.addCard(botsQueue.get(0).);
+                else if (winnerContract instanceof Contract) {
+                    //some code
+                    convention.countTricks(bots, bots.get(0), winnerContract);//pseudo
+                }
+                else if (winnerContract instanceof ContractWithSuit) {
+                    convention.countTricks(bots, bots.get(0), winnerContract);//pseudo
+                }
+                else if (winnerContract instanceof Misere){
+                    convention.countMisere(bots.get(0));//pseudo
                 }
             }
-            if (winnerContract instanceof Pass) {
-                convention.countPass(gameBots);
-            }
 
-
+            //shitcode moves bots in array for next turn
             currentBot++;
             if (currentBot == 1) {
                 currentBot = -1;
