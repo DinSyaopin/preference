@@ -23,7 +23,7 @@ public class NoviceTurnsStrategy implements PlayerTurnsStrategy {
     public Card putCard(Pass pass, GameBot gameBot, Suits suit) {
         Card puttedCard = null;
         if (suit == null) {
-            takeRandomCardAndRemoveItFromHand(gameBot);
+            puttedCard = takeRandomCardAndRemoveItFromHand(gameBot);
         }
         else {
             for (Card card:
@@ -35,7 +35,7 @@ public class NoviceTurnsStrategy implements PlayerTurnsStrategy {
                 }
             }
             if (puttedCard == null) {
-                takeRandomCardAndRemoveItFromHand(gameBot);
+                puttedCard = takeRandomCardAndRemoveItFromHand(gameBot);
             }
         }
 

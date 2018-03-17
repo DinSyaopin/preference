@@ -2,11 +2,13 @@ package com.dinsyaopin.contracts;
 
 
 import com.dinsyaopin.GameBot;
+import com.dinsyaopin.Suits;
 
 public class Contract {
     private GameBot winner;
     private int tricks;
     private int weight;
+    private Suits suit;
 
     public GameBot getWinner() {
         return winner;
@@ -34,5 +36,9 @@ public class Contract {
 
     public Contract(int tricks) {
         this.tricks = tricks;
+    }
+
+    public Suits getSuit() {
+        return suit;
     }
 }

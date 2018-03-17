@@ -2,15 +2,13 @@ package com.dinsyaopin.Convention;
 
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.contracts.Contract;
+import com.dinsyaopin.contracts.ContractWithSuit;
+import com.dinsyaopin.contracts.Misere;
+import com.dinsyaopin.contracts.Pass;
 
 import java.util.ArrayList;
 
 public class RostovConvention extends Convention {
-    @Override
-    public String toString() {
-        return "Rostov";
-    }
-
     @Override
     public int checkPoolMultiplier(Contract contract) {
         return 0;
@@ -22,17 +20,22 @@ public class RostovConvention extends Convention {
     }
 
     @Override
-    public void countPass(ArrayList<GameBot> gameBots) {
+    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Contract winnerContract) {
 
     }
 
     @Override
-    public void countTricks(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Contract contract) {
+    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, ContractWithSuit winnerContract) {
 
     }
 
     @Override
-    public void countMisere(GameBot gameBotWithContract) {
+    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Pass winnerContract) {
+
+    }
+
+    @Override
+    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Misere winnerContract) {
 
     }
 }

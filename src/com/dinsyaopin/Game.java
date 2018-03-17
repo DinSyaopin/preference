@@ -80,42 +80,22 @@ public class Game {
                 //convention counts points
 
                 if (currentWinner == null) {
-                    bots.get(0).putCard(table, winnerContract, null);//putCard() надо дописать
+                    bots.get(0).putCard(table, winnerContract, null);
                     Suits turnSuit = table.getFirstCard().suit;
                     bots.get(1).putCard(table, winnerContract, turnSuit);
                     bots.get(2).putCard(table, winnerContract, turnSuit);
-                    currentWinner = table.showTurnWinner(bots);//проверить метод
-                    currentWinner.addTrick();//проверить метод
-                    indexOfCurrentWinner = bots.indexOf(currentWinner);//работает
+                    currentWinner = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
+                    currentWinner.addTrick();
+                    indexOfCurrentWinner = bots.indexOf(currentWinner);
                 }
-                else {//sorting array with currentWinner as 0 element
+                else {//sorting array with currentWinner as 0 element. needed 100%
                     botsIndexes = countBotsIndexes(indexOfCurrentWinner);
                     for (int j = 0; i < 2; i++) {
                         bots.add(gameBots.get(botsIndexes[j]));
                     }
-                    /*
-                    table.addCard(playerTurnsStrategy.putPass(bots.get(0)));
-
-                    table.addCard(playerTurnsStrategy.putPass(bots.get(1)));
-                    table.addCard(playerTurnsStrategy.putPass(bots.get(2)));
-                    currentWinner = table.showTurnWinner(bots);
-                    currentWinner.addTrick();
-                    indexOfCurrentWinner = bots.indexOf(currentWinner);
-                    */
                 }
-                convention.countPass(bots);
-                /*
-                else if (winnerContract instanceof Contract) {
-                    //some code
-                    convention.countTricks(bots, bots.get(0), winnerContract);//pseudo
-                }
-                else if (winnerContract instanceof ContractWithSuit) {
-                    convention.countTricks(bots, bots.get(0), winnerContract);//pseudo
-                }
-                else if (winnerContract instanceof Misere){
-                    convention.countMisere(bots.get(0));//pseudo
-                }*/
             }
+            convention.countPoints(bots, currentWinner, winnerContract);
 
             //shitcode moves bots in array for next turn
             currentBot++;
