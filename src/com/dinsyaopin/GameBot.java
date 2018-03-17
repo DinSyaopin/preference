@@ -14,6 +14,8 @@ public class GameBot {
     private int mountain;
     private int pool;
     private PlayerTurnsStrategy playerTurnsStrategy;
+    private int whistsToLeft;
+    private int whistsToRight;
 
     public ArrayList<Card> getHand() {
         return hand;
@@ -85,6 +87,22 @@ public class GameBot {
 
     public void setPlayerTurnsStrategy(PlayerTurnsStrategy playerTurnsStrategy) {
         this.playerTurnsStrategy = playerTurnsStrategy;
+    }
+
+    public int getWhistsToLeft() {
+        return whistsToLeft;
+    }
+
+    public void setWhistsToLeft(int whistsToLeft) {
+        this.whistsToLeft = whistsToLeft;
+    }
+
+    public int getWhistsToRight() {
+        return whistsToRight;
+    }
+
+    public void setWhistsToRight(int whistsToRight) {
+        this.whistsToRight = whistsToRight;
     }
 
     public ArrayList<Card> initializeHand(Deck deck) {

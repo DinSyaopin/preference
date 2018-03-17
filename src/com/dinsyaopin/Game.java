@@ -12,6 +12,7 @@ import com.dinsyaopin.contracts.Pass;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.dinsyaopin.BotsQuery.countBotsIndexes;
 import static com.dinsyaopin.Configuration.*;
@@ -34,8 +35,8 @@ public class Game {
     }
 
     private void startGame(PlayerTradingStrategy playerTradingStrategy, PlayerTurnsStrategy playerTurnsStrategy, Convention convention) throws IOException {
-        int pool = getPool();
-        logDataInitial.setPool(pool);
+        int gamePool = getPool();
+        logDataInitial.setPool(gamePool);
         bot1 = new GameBot("Player1");
         bot2 = new GameBot("Player2");
         bot3 = new GameBot("Player3");
@@ -53,7 +54,7 @@ public class Game {
 
         int currentBot = -1;
 
-        while (bot1.getPool() != pool || bot2.getPool() != pool || bot3.getPool() != pool) {
+        while (bot1.getPool() != gamePool || bot2.getPool() != gamePool || bot3.getPool() != gamePool) {
 
             dealer.initializeDeck();
             dealer.giveCardsToPlayer(bot1);
@@ -117,5 +118,53 @@ public class Game {
                 currentBot = -1;
             }
         }
+
+        //counting points
+
+        //equalize pool
+        alignPool(gameBots, gamePool);
+        //substract mountain
+        substractSmallestMountainFromAllMountains(gameBots);
+        //count middleMountain
+        int middleMountain = countMiddleMountain(gameBots);
+        //count middleMountainForPlayer
+        countMiddleMountainForEveryPlayer(gameBots, middleMountain);
+        //countNetting
+        countNetting(gameBots);
+    }
+    public void alignPool(ArrayList<GameBot> gameBots, int gamePool) {
+        for (GameBot gameBot:
+                gameBots) {
+            if (gameBot.getPool() != gamePool) {
+                int shortage = gamePool - gameBot.getPool();
+                gameBot.addToPool(shortage);
+                gameBot.addToMountain(shortage);
+            }
+        }
+    }
+    public void substractSmallestMountainFromAllMountains(ArrayList<GameBot> gameBots) {
+        int[] mountains = {gameBots.get(0).getMountain(), gameBots.get(1).getMountain(), gameBots.get(2).getMountain()};
+        Arrays.sort(mountains);
+        for (GameBot gameBot:
+             gameBots) {
+            gameBot.setMountain(gameBot.getMountain() - mountains[0]);
+        }
+    }
+    public int countMiddleMountain(ArrayList<GameBot> gameBots) {
+        int mountSum = 0;
+        for (GameBot gameBot:
+             gameBots) {
+            mountSum += gameBot.getMountain();
+        }
+        return mountSum * 10 / 3;
+    }
+    public void countMiddleMountainForEveryPlayer(ArrayList<GameBot> gameBots, int middleMountain) {
+        for (GameBot gameBot:
+             gameBots) {
+            gameBot.setMountain(middleMountain - gameBot.getMountain() * 10);
+        }
+    }
+    public void countNetting(ArrayList<GameBot> gameBots) {
+
     }
 }

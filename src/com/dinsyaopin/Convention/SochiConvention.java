@@ -7,16 +7,31 @@ import com.dinsyaopin.contracts.Misere;
 import com.dinsyaopin.contracts.Pass;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SochiConvention extends Convention {
     @Override
     public int checkPoolMultiplier(Contract contract) {
-        return 0;
+        switch (contract.getTricks()) {
+            case 6 : return 2;
+            case 7 : return 4;
+            case 8 : return 6;
+            case 9 : return 8;
+            case 10 : return 10;
+            default: return 2;
+        }
     }
 
     @Override
     public int checkMountainMultiplier(Contract contract) {
-        return 0;
+        switch (contract.getTricks()) {
+            case 6 : return 2;
+            case 7 : return 4;
+            case 8 : return 6;
+            case 9 : return 8;
+            case 10 : return 10;
+            default: return 2;
+        }
     }
 
     @Override
@@ -30,12 +45,28 @@ public class SochiConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Pass winnerContract) {
-
+    public void countPoints(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Pass winnerContract) {
+        int[] tricksArray = {gameBots.get(0).getTricks(),gameBots.get(1).getTricks(), gameBots.get(2).getTricks()};
+        Arrays.sort(tricksArray);
+        for (GameBot gameBot:
+                gameBots) {
+            if (gameBot.getTricks() == 0) {
+                gameBot.addToPool(1);
+            }
+            else {
+                gameBot.setTrick(gameBot.getTricks() - tricksArray[0]);
+                if (gameBot.getTricks() != 0) {
+                    gameBot.addToMountain(gameBot.getTricks() * 2);
+                }
+            }
+        }
     }
 
     @Override
     public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Misere winnerContract) {
-
+        if (gameBotWithContract.getTricks() == 0) {
+            gameBotWithContract.addToPool(10);
+        }
+        else gameBotWithContract.addToMountain(gameBotWithContract.getTricks() * 10);
     }
 }

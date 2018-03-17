@@ -6,7 +6,6 @@ import com.dinsyaopin.contracts.ContractWithSuit;
 import com.dinsyaopin.contracts.Misere;
 import com.dinsyaopin.contracts.Pass;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,8 +17,9 @@ public class LeningradConvention extends Convention {
             case 6 : return 2;
             case 7 : return 4;
             case 8 : return 6;
-            case 9 : return 10;
-            default: return 0;
+            case 9 : return 8;
+            case 10 : return 10;
+            default: return 2;
         }
     }
 
@@ -30,7 +30,8 @@ public class LeningradConvention extends Convention {
             case 7 : return 8;
             case 8 : return 12;
             case 9 : return 16;
-            default: return 20;
+            case 10 : return 20;
+            default: return 4;
         }
     }
 
@@ -43,7 +44,7 @@ public class LeningradConvention extends Convention {
             if (gameBot.getTricks() == 0) {
                 gameBot.addToPool(1);
             }
-            else {//consolation
+            else {
                 gameBot.setTrick(gameBot.getTricks() - tricksArray[0]);
                 if (gameBot.getTricks() != 0) {
                     gameBot.addToMountain(gameBot.getTricks() * 2);
@@ -63,7 +64,6 @@ public class LeningradConvention extends Convention {
                     gameBot.addToPool(contract.getTricks() * checkPoolMultiplier(contract));
                 }
                 else {
-
                     gameBot.addToMountain(penalty * checkMountainMultiplier(contract));
                 }
             }/*
