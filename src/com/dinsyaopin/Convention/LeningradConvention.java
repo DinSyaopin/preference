@@ -6,7 +6,9 @@ import com.dinsyaopin.contracts.ContractWithSuit;
 import com.dinsyaopin.contracts.Misere;
 import com.dinsyaopin.contracts.Pass;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LeningradConvention extends Convention {
 
@@ -33,14 +35,19 @@ public class LeningradConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Pass pass) {
+    public void countPoints(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Pass pass) {//ready
+        int[] tricksArray = {gameBots.get(0).getTricks(),gameBots.get(1).getTricks(), gameBots.get(2).getTricks()};
+        Arrays.sort(tricksArray);
         for (GameBot gameBot:
                 gameBots) {
             if (gameBot.getTricks() == 0) {
                 gameBot.addToPool(1);
             }
-            else {
-                gameBot.addToMountain(gameBot.getTricks() * 2);
+            else {//consolation
+                gameBot.setTrick(gameBot.getTricks() - tricksArray[0]);
+                if (gameBot.getTricks() != 0) {
+                    gameBot.addToMountain(gameBot.getTricks() * 2);
+                }
             }
         }
     }

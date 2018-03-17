@@ -75,6 +75,7 @@ public class Game {
             for (int i = 0; i < countOfTurns; i++) {//turns
                 //initialize table every turn
                 Table table = new Table();
+                //ArrayList<GameBot>/////////
                 //players put cards
                 //table chooses trick winner
                 //convention counts points
@@ -87,12 +88,25 @@ public class Game {
                     currentWinner = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
                     currentWinner.addTrick();
                     indexOfCurrentWinner = bots.indexOf(currentWinner);
+                    bots.remove(0);
+                    bots.remove(1);
+                    bots.remove(2);
                 }
                 else {//sorting array with currentWinner as 0 element. needed 100%
                     botsIndexes = countBotsIndexes(indexOfCurrentWinner);
                     for (int j = 0; i < 2; i++) {
                         bots.add(gameBots.get(botsIndexes[j]));
                     }
+                    bots.get(0).putCard(table, winnerContract, null);
+                    Suits turnSuit = table.getFirstCard().suit;
+                    bots.get(1).putCard(table, winnerContract, turnSuit);
+                    bots.get(2).putCard(table, winnerContract, turnSuit);
+                    currentWinner = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
+                    currentWinner.addTrick();
+                    indexOfCurrentWinner = bots.indexOf(currentWinner);
+                    bots.remove(0);
+                    bots.remove(1);
+                    bots.remove(2);
                 }
             }
             convention.countPoints(bots, currentWinner, winnerContract);
