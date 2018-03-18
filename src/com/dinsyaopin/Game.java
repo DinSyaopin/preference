@@ -83,8 +83,13 @@ public class Game {
 
             doTurns(bots, gameBots, winnerContract);
 
-            convention.countPoints(bots, winnerContract);
+            convention.countPoints(gameBots, winnerContract);
 
+            //flush tricks of gamebots
+            for (GameBot gameBot:
+                    gameBots) {
+                gameBot.setTrick(0);
+            }
             //shitcode moves bots in array for next turn
             currentBot++;
             if (currentBot == 1) {
