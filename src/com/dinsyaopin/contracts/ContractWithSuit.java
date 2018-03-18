@@ -17,4 +17,9 @@ public class ContractWithSuit extends Contract {
         super(tricks);
         this.suit = suit;
     }
+
+    @Override
+    public String toString() {
+        return "Контракт с мастью";
+    }
 }

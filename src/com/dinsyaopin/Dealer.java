@@ -11,6 +11,11 @@ public class Dealer {
             gameBot.setHand(gameBot.initializeHand(deck));
         }
     }
+    public void giveBuyIn(GameBot gameBot) {
+        for (int i = 0; i < 2; i++) {
+            gameBot.addCardToHand(deck.getRandomCardFromDeck());
+        }
+    }
 
     public void initializeDeck() {
         deck = new Deck();

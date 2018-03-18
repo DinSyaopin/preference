@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Deck {
     public ArrayList<Card> cards = new ArrayList<>(32);
+
     public Deck() {
         for (Ranks r:
              Ranks.values()) {

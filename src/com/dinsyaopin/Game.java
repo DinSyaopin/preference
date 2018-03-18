@@ -6,6 +6,7 @@ import com.dinsyaopin.PlayerStrategy.TradingStrategy.PlayerTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
 import com.dinsyaopin.contracts.Contract;
 import com.dinsyaopin.Log.LogDataInitial;
+import com.dinsyaopin.contracts.Pass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,23 +34,30 @@ public class Game {
 
     private void startGame(PlayerTradingStrategy playerTradingStrategy, PlayerTurnsStrategy playerTurnsStrategy, Convention convention) throws IOException {
         int gamePool = getPool();
+
         logDataInitial.setPool(gamePool);
+
         bot1 = new GameBot("Player1");
         bot2 = new GameBot("Player2");
         bot3 = new GameBot("Player3");
+
         logDataInitial.setGameBot1Name(bot1.getBotName());
         logDataInitial.setGameBot2Name(bot2.getBotName());
         logDataInitial.setGameBot3Name(bot3.getBotName());
+
         bot1.setPlayerTurnsStrategy(playerTurnsStrategy);
         bot2.setPlayerTurnsStrategy(playerTurnsStrategy);
         bot3.setPlayerTurnsStrategy(playerTurnsStrategy);
+
         ArrayList<GameBot> gameBots = new ArrayList<>();
         gameBots.add(bot1);
         gameBots.add(bot2);
         gameBots.add(bot3);
+
         Dealer dealer = new Dealer();
 
         int currentBot = -1;
+
         boolean gameEndingCondition = bot1.getPool() == gamePool || bot2.getPool() == gamePool || bot3.getPool() == gamePool;
 
         while (!gameEndingCondition) {
@@ -66,6 +74,14 @@ public class Game {
             }
 
             Contract winnerContract = playerTradingStrategy.toTrade(bots);
+            GameBot winnerOfTrading = winnerContract.getWinner();
+            if (winnerContract.toString().equals("Контракт с мастью") || winnerContract.toString().equals("Контракт без масти")) {
+                dealer.giveBuyIn(winnerOfTrading);
+                ArrayList<GameBot> botsWithoutContract = playerTradingStrategy.takeBotsWithoutContract(gameBots, winnerContract);
+                playerTradingStrategy.tradeWhists(winnerContract, botsWithoutContract);
+                //bots without contract whisting or not.
+            }
+
             GameBot currentWinner = null;
             int countOfTurns = 10;
             int indexOfCurrentWinner = 0;
@@ -152,7 +168,7 @@ public class Game {
     }
 
     public void writeOffWhists(ArrayList<GameBot> gameBots) {
-
+        //some
     }
 
     public void countTotalWhists(ArrayList<GameBot> gameBots) {
@@ -174,5 +190,4 @@ public class Game {
         System.out.println("Player 2 has total whists: " + bot2.getTotalWhists());
         System.out.println("Player 3 has total whsits: " + bot3.getTotalWhists());
     }
-
 }

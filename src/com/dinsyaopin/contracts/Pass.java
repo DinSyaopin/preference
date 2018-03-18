@@ -10,4 +10,9 @@ public class Pass extends Contract {
     public Pass(int tricks) {
         super(tricks);
     }
+
+    @Override
+    public String toString() {
+        return "Пас";
+    }
 }

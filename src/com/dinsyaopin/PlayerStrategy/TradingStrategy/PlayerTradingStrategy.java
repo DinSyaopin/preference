@@ -15,7 +15,8 @@ public interface PlayerTradingStrategy {
     Contract checkMisere(GameBot gameBot);
     Contract checkContract(GameBot gameBot);
     Contract toTrade(ArrayList<GameBot> gameBot);
-
+    void tradeWhists(Contract contract, ArrayList<GameBot> gameBots);
+    ArrayList<GameBot> takeBotsWithoutContract(ArrayList<GameBot> gameBots, Contract winnerContract);
     /*Надо сделать процесс торговли зависимым от уровня игрока.
     -Новичок не перебивает контракт другого игрока.
     -Студент перебивает до мизера.

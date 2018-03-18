@@ -14,6 +14,7 @@ public class GameBot {
     private int mountain;
     private int pool;
     private PlayerTurnsStrategy playerTurnsStrategy;
+    private boolean isWhisting;
     private int whistsToLeft;
     private int whistsToRight;
     private int totalWhists;
@@ -90,6 +91,14 @@ public class GameBot {
         this.playerTurnsStrategy = playerTurnsStrategy;
     }
 
+    public boolean isWhisting() {
+        return isWhisting;
+    }
+
+    public void setWhisting(boolean whisting) {
+        isWhisting = whisting;
+    }
+
     public int getWhistsToLeft() {
         return whistsToLeft;
     }
@@ -122,11 +131,9 @@ public class GameBot {
         return hand;
     }
 
-    /*public void takeBuyIn(Deck deck) {
-        if (this.toTrade()) {
-            hand.add(deck.getRandomCardFromDeck()); //здесь надо подумать, может быть разместить карты прикупа на столе и со стола забирать а не из колоды?
-        }
-    }*/
+    public void addCardToHand(Card card) {
+        hand.add(card);
+    }
 
     public void putCard(Table table, Contract contract, Suits suit) {
         Card card = playerTurnsStrategy.putCard(contract, this, suit);

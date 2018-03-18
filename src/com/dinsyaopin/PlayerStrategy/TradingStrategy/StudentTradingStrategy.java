@@ -46,4 +46,14 @@ public class StudentTradingStrategy implements PlayerTradingStrategy {
     public Contract toTrade(ArrayList<GameBot> gameBot) {
         return null;
     }
+
+    @Override
+    public void tradeWhists(Contract contract, ArrayList<GameBot> gameBots) {
+
+    }
+
+    @Override
+    public ArrayList<GameBot> takeBotsWithoutContract(ArrayList<GameBot> gameBots, Contract winnerContract) {
+        return null;
+    }
 }

@@ -9,6 +9,7 @@ public class Contract {
     private int tricks;
     private int weight;
     private Suits suit;
+    private int whist;
 
     public GameBot getWinner() {
         return winner;
@@ -36,9 +37,27 @@ public class Contract {
 
     public Contract(int tricks) {
         this.tricks = tricks;
+        switch (tricks) {
+            case 6 : setWhist(4); break;
+            case 7 : setWhist(2); break;
+            default : setWhist(1); break;
+        }
     }
 
     public Suits getSuit() {
         return suit;
+    }
+
+    public int getWhist() {
+        return whist;
+    }
+
+    public void setWhist(int whist) {
+        this.whist = whist;
+    }
+
+    @Override
+    public String toString() {
+        return "Контракт без масти";
     }
 }

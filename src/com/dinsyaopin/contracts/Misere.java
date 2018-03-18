@@ -11,4 +11,9 @@ public class Misere extends Contract {
     public Misere(int tricks) {
         super(tricks);
     }
+
+    @Override
+    public String toString() {
+        return "Мизер";
+    }
 }

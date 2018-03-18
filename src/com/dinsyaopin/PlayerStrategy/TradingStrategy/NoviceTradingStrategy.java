@@ -126,4 +126,47 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
         }
         return gameContract;
     }
+
+    public ArrayList<GameBot> takeBotsWithoutContract(ArrayList<GameBot> gameBots, Contract gameContract) {
+        ArrayList<GameBot> bots = new ArrayList<>();
+        for (GameBot gameBot:
+                gameBots) {
+            if (!(gameBot == gameContract.getWinner())) {
+                bots.add(gameBot);
+            }
+        }
+        return bots;
+    }
+
+    @Override
+    public void tradeWhists(Contract contract, ArrayList<GameBot> botsWithoutContract) {//queue of trading isn't corresponds to rules
+        if (contract.toString().equals("Контракт с мастью")) {
+            for (GameBot gameBot:
+                    botsWithoutContract) {
+                int[] quantityOfCardsOfEachSuit = countCardsOfCertainSuits(gameBot);
+                for (int i = 0; i < quantityOfCardsOfEachSuit.length; i++) {
+                    if (contract.getSuit().getValue() == i) {
+                        if (quantityOfCardsOfEachSuit[i] >= contract.getWhist()) {
+                            gameBot.setWhisting(true);
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (GameBot gameBot:
+                    botsWithoutContract) {
+                int expectedTricks = 0;
+                for (Card card:
+                        gameBot.getHand()) {
+                    if (card.rank.getValue() == Ranks.ACE.getValue()) {
+                        expectedTricks++;
+                    }
+                }
+                if (expectedTricks >= contract.getWhist()) {
+                    gameBot.setWhisting(true);
+                }
+            }
+        }
+    }
 }
