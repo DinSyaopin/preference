@@ -18,6 +18,8 @@ public class GameBot {
     private int whistsToLeft;
     private int whistsToRight;
     private int totalWhists;
+    private GameBot botLeft;
+    private GameBot botRight;
 
     public ArrayList<Card> getHand() {
         return hand;
@@ -103,16 +105,17 @@ public class GameBot {
         return whistsToLeft;
     }
 
-    public void setWhistsToLeft(int whistsToLeft) {
-        this.whistsToLeft = whistsToLeft;
+    public void addWhists(GameBot botWithContract, int whists) {
+        if (botWithContract == getBotLeft()) {
+            this.whistsToLeft += whists;
+        }
+        else {
+            this.whistsToRight += whists;
+        }
     }
 
     public int getWhistsToRight() {
         return whistsToRight;
-    }
-
-    public void setWhistsToRight(int whistsToRight) {
-        this.whistsToRight = whistsToRight;
     }
 
     public int getTotalWhists() {
@@ -121,6 +124,22 @@ public class GameBot {
 
     public void setTotalWhists(int totalWhists) {
         this.totalWhists = totalWhists;
+    }
+
+    public GameBot getBotLeft() {
+        return botLeft;
+    }
+
+    public void setBotLeft(GameBot botLeft) {
+        this.botLeft = botLeft;
+    }
+
+    public GameBot getBotRight() {
+        return botRight;
+    }
+
+    public void setBotRight(GameBot botRight) {
+        this.botRight = botRight;
     }
 
     public ArrayList<Card> initializeHand(Deck deck) {
