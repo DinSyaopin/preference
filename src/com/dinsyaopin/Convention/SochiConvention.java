@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SochiConvention extends Convention {
+
     @Override
-    public int checkPoolMultiplier(Contract contract) {
+    public int checkWhistsMultiplier(Contract contract) {
         switch (contract.getTricks()) {
             case 6 : return 2;
             case 7 : return 4;
@@ -23,7 +24,7 @@ public class SochiConvention extends Convention {
     }
 
     @Override
-    public int checkMountainMultiplier(Contract contract) {
+    public int checkRemiseGameMultiplier(Contract contract) {
         switch (contract.getTricks()) {
             case 6 : return 2;
             case 7 : return 4;
@@ -35,13 +36,15 @@ public class SochiConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, Contract winnerContract) {
-
-    }
-
-    @Override
-    public void countPoints(ArrayList<GameBot> bots, ContractWithSuit winnerContract) {
-
+    public int checkRemiseWhistsMultiplier(Contract contract) {
+        switch (contract.getTricks()) {
+            case 6 : return 2;
+            case 7 : return 4;
+            case 8 : return 6;
+            case 9 : return 8;
+            case 10 : return 10;
+            default: return 2;
+        }
     }
 
     @Override
@@ -69,5 +72,10 @@ public class SochiConvention extends Convention {
             botWithContract.addToPool(10);
         }
         else botWithContract.addToMountain(botWithContract.getTricks() * 10);
+    }
+
+    @Override
+    public String toString() {
+        return "Sochi";
     }
 }

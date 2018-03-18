@@ -94,14 +94,14 @@ public class Game {
                 currentBot = -1;
             }
         }
-        countPoints(gameBots, gamePool);
+        countTotalPoints(gameBots, gamePool);
     }
-    public void initializeBots() {
+    private void initializeBots() {
         bot1 = new GameBot("Player1");
         bot2 = new GameBot("Player2");
         bot3 = new GameBot("Player3");
     }
-    public void setAliases() {
+    private void setAliases() {
         bot1.setBotLeft(bot2);
         bot1.setBotRight(bot3);
 
@@ -112,7 +112,7 @@ public class Game {
         bot3.setBotRight(bot2);
     }
     //doTurns add tricks to all bots
-    public void doTurns(ArrayList<GameBot> bots, ArrayList<GameBot> gameBots, GameBot winnerOfTurn,
+    private void doTurns(ArrayList<GameBot> bots, ArrayList<GameBot> gameBots, GameBot winnerOfTurn,
                         Contract winnerContract, int indexOfCurrentWinner) {
         int countOfTurns = 10;
         for (int i = 0; i < countOfTurns; i++) {//turns
@@ -148,7 +148,7 @@ public class Game {
         }
     }
 
-    public void alignPool(ArrayList<GameBot> gameBots, int gamePool) {
+    private void alignPool(ArrayList<GameBot> gameBots, int gamePool) {
         for (GameBot gameBot:
                 gameBots) {
             if (gameBot.getPool() != gamePool) {
@@ -159,7 +159,7 @@ public class Game {
         }
     }
 
-    public void substractSmallestMountainFromAllMountains(ArrayList<GameBot> gameBots) {
+    private void substractSmallestMountainFromAllMountains(ArrayList<GameBot> gameBots) {
         int[] mountains = {gameBots.get(0).getMountain(), gameBots.get(1).getMountain(), gameBots.get(2).getMountain()};
         Arrays.sort(mountains);
         for (GameBot gameBot:
@@ -168,7 +168,7 @@ public class Game {
         }
     }
 
-    public int countMiddleMountain(ArrayList<GameBot> gameBots) {
+    private int countMiddleMountain(ArrayList<GameBot> gameBots) {
         int mountSum = 0;
         for (GameBot gameBot:
              gameBots) {
@@ -177,14 +177,14 @@ public class Game {
         return mountSum * 10 / 3;
     }
 
-    public void countMiddleMountainForEveryPlayer(ArrayList<GameBot> gameBots, int middleMountain) {
+    private void countMiddleMountainForEveryPlayer(ArrayList<GameBot> gameBots, int middleMountain) {
         for (GameBot gameBot:
              gameBots) {
             gameBot.setMountain(middleMountain - gameBot.getMountain() * 10);
         }
     }
 
-    public void writeOffWhists(ArrayList<GameBot> gameBots) {
+    private void writeOffWhists(ArrayList<GameBot> gameBots) {
         GameBot bot1 = gameBots.get(0);
         GameBot bot2 = gameBots.get(1);
         GameBot bot3 = gameBots.get(2);
@@ -202,14 +202,14 @@ public class Game {
         bot3.setTotalWhists(bot3LeftWhists + bot3RightWhists);
     }
 
-    public void countTotalWhists(ArrayList<GameBot> gameBots) {
+    private void countTotalWhists(ArrayList<GameBot> gameBots) {
         for (GameBot gameBot:
                 gameBots) {
             gameBot.setTotalWhists(gameBot.getMountain() + gameBot.getTotalWhists());
         }
     }
 
-    public void countPoints(ArrayList<GameBot> gameBots, int gamePool) {
+    private void countTotalPoints(ArrayList<GameBot> gameBots, int gamePool) {
         alignPool(gameBots, gamePool);
         substractSmallestMountainFromAllMountains(gameBots);
         int middleMountain = countMiddleMountain(gameBots);

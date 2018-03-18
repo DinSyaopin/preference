@@ -12,19 +12,19 @@ import java.util.Arrays;
 public class LeningradConvention extends Convention {
 
     @Override
-    public int checkPoolMultiplier(Contract contract) {
-        switch (contract.getTricks()) {
-            case 6 : return 2;
-            case 7 : return 4;
-            case 8 : return 6;
-            case 9 : return 8;
-            case 10 : return 10;
-            default: return 2;
+    public int checkWhistsMultiplier(Contract contract) {
+        switch (contract.getWhist()) {
+            case 6 : return 4;
+            case 7 : return 8;
+            case 8 : return 12;
+            case 9 : return 16;
+            case 10 : return 20;
+            default: return 4;
         }
     }
 
     @Override
-    public int checkMountainMultiplier(Contract contract) {
+    public int checkRemiseGameMultiplier(Contract contract) {
         switch (contract.getTricks()) {
             case 6 : return 4;
             case 7 : return 8;
@@ -32,6 +32,18 @@ public class LeningradConvention extends Convention {
             case 9 : return 16;
             case 10 : return 20;
             default: return 4;
+        }
+    }
+
+    @Override
+    public int checkRemiseWhistsMultiplier(Contract contract) {
+        switch (contract.getWhist()) {
+            case 6 : return 2;
+            case 7 : return 4;
+            case 8 : return 6;
+            case 9 : return 8;
+            case 10 : return 10;
+            default: return 2;
         }
     }
 
@@ -51,40 +63,6 @@ public class LeningradConvention extends Convention {
                 }
             }
         }
-    }
-
-    @Override
-    public void countPoints(ArrayList<GameBot> gameBots, Contract contract) {
-        GameBot botWithContract = contract.getWinner();
-        for (GameBot gameBot:
-                gameBots) {
-            int penalty = contract.getTricks() - gameBot.getTricks();
-
-            if (gameBot == botWithContract) {
-                if (gameBot.getTricks() == contract.getTricks()) {
-                    gameBot.addToPool(contract.getTricks() * checkPoolMultiplier(contract));
-                }
-                else {
-                    gameBot.addToMountain(penalty * checkMountainMultiplier(contract));
-                }
-            }/*
-            else {
-                if (gameBot.whisting()) {
-                    if (gameBot.getTricks() == contract.getWhists()) {
-                        gameBot.addToWhists(contract.getTricks() * checkWhistsMultiplier(contract));
-                    }
-                    else {
-                        gameBot.addToMountain(penalty * checkMountainMultiplier(contract) / 2);
-                        gameBot.addToWhists();
-                    }
-                }
-            }*/
-        }
-    }
-
-    @Override
-    public void countPoints(ArrayList<GameBot> bots, ContractWithSuit winnerContract) {
-
     }
 
     @Override
