@@ -3,10 +3,7 @@ package com.dinsyaopin.PlayerStrategy.TurnsStrategy;
 import com.dinsyaopin.Card;
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Suits;
-import com.dinsyaopin.contracts.Contract;
-import com.dinsyaopin.contracts.ContractWithSuit;
-import com.dinsyaopin.contracts.Misere;
-import com.dinsyaopin.contracts.Pass;
+import com.dinsyaopin.contracts.*;
 
 public interface PlayerTurnsStrategy {
     public Card putCard(Contract contract, GameBot gameBot, Suits suit);

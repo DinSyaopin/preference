@@ -80,8 +80,8 @@ public class Game {
                 //bots without contract whisting or not.
             }
 
-            GameBot winnerOfTurn = new GameBot("");
-
+            //GameBot winnerOfTurn = new GameBot("");
+            GameBot winnerOfTurn = null;
 
             doTurns(bots, gameBots, winnerOfTurn, winnerContract);
 

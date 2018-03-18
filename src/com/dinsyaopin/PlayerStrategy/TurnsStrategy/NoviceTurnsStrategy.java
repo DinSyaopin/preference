@@ -20,15 +20,15 @@ public class NoviceTurnsStrategy implements PlayerTurnsStrategy {
     }
 
     @Override
-    public Card putCard(Pass pass, GameBot gameBot, Suits suit) {
+    public Card putCard(Pass pass, GameBot gameBot, Suits turnSuit) {
         Card puttedCard = null;
-        if (suit == null) {
+        if (turnSuit == null) {
             puttedCard = takeRandomCardAndRemoveItFromHand(gameBot);
         }
         else {
             for (Card card:
                     gameBot.getHand()) {
-                if (card.suit == suit) {
+                if (card.suit == turnSuit) {
                     puttedCard = card;
                     gameBot.getHand().remove(card);
                     break;
@@ -38,22 +38,72 @@ public class NoviceTurnsStrategy implements PlayerTurnsStrategy {
                 puttedCard = takeRandomCardAndRemoveItFromHand(gameBot);
             }
         }
-
         return puttedCard;
     }
 
     @Override
-    public Card putCard(Contract contract, GameBot gameBot, Suits suit) {
-        return null;
+    public Card putCard(Contract contract, GameBot gameBot, Suits turnSuit) {
+        Card puttedCard;
+        if (turnSuit == null) {
+            return takeRandomCardAndRemoveItFromHand(gameBot);
+        }
+        else {
+            for (Card card:
+                    gameBot.getHand()) {
+                if (card.suit == turnSuit) {
+                    puttedCard = card;
+                    gameBot.getHand().remove(card);
+                    return puttedCard;
+                }
+            }
+            return takeRandomCardAndRemoveItFromHand(gameBot);
+        }
+    }
+
+
+    @Override
+    public Card putCard(Misere misere, GameBot gameBot, Suits turnSuit) {
+        Card puttedCard;
+        if (turnSuit == null) {
+            return takeRandomCardAndRemoveItFromHand(gameBot);
+        }
+        else {
+            for (Card card:
+                    gameBot.getHand()) {
+                if (card.suit == turnSuit) {
+                    puttedCard = card;
+                    gameBot.getHand().remove(card);
+                    return puttedCard;
+                }
+            }
+            return takeRandomCardAndRemoveItFromHand(gameBot);
+        }
     }
 
     @Override
-    public Card putCard(Misere misere, GameBot gameBot, Suits suit) {
-        return null;
-    }
-
-    @Override
-    public Card putCard(ContractWithSuit contractWithSuit, GameBot gameBot, Suits suit) {
-        return null;
+    public Card putCard(ContractWithSuit contractWithSuit, GameBot gameBot, Suits turnSuit) {
+        Card puttedCard;
+        if (turnSuit == null) {
+            return takeRandomCardAndRemoveItFromHand(gameBot);
+        }
+        else {
+            for (Card card:
+                    gameBot.getHand()) {
+                if (card.suit == turnSuit) {
+                    puttedCard = card;
+                    gameBot.getHand().remove(card);
+                    return puttedCard;
+                }
+            }
+            for (Card card:
+                    gameBot.getHand()) {
+                if (card.suit == contractWithSuit.getSuit()) {
+                    puttedCard = card;
+                    gameBot.getHand().remove(card);
+                    return puttedCard;
+                }
+            }
+            return takeRandomCardAndRemoveItFromHand(gameBot);
+        }
     }
 }

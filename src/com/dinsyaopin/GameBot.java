@@ -154,8 +154,8 @@ public class GameBot {
         hand.add(card);
     }
 
-    public void putCard(Table table, Contract contract, Suits suit) {
-        Card card = playerTurnsStrategy.putCard(contract, this, suit);
+    public void putCard(Table table, Contract winnerContract, Suits turnSuit) {
+        Card card = playerTurnsStrategy.putCard(winnerContract, this, turnSuit);
         table.addCard(card);
     }
 }
