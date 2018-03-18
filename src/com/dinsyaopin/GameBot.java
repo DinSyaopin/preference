@@ -16,6 +16,7 @@ public class GameBot {
     private PlayerTurnsStrategy playerTurnsStrategy;
     private int whistsToLeft;
     private int whistsToRight;
+    private int totalWhists;
 
     public ArrayList<Card> getHand() {
         return hand;
@@ -103,6 +104,14 @@ public class GameBot {
 
     public void setWhistsToRight(int whistsToRight) {
         this.whistsToRight = whistsToRight;
+    }
+
+    public int getTotalWhists() {
+        return totalWhists;
+    }
+
+    public void setTotalWhists(int totalWhists) {
+        this.totalWhists = totalWhists;
     }
 
     public ArrayList<Card> initializeHand(Deck deck) {

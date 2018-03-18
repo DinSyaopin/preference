@@ -1,10 +1,15 @@
 package com.dinsyaopin;
 
+import java.util.ArrayList;
+
 public class Dealer {
     private Deck deck;
 
-    public void giveCardsToPlayer(GameBot gameBot) {
-        gameBot.setHand(gameBot.initializeHand(deck));
+    public void giveCardsToPlayers(ArrayList<GameBot> gameBots) {
+        for (GameBot gameBot:
+             gameBots) {
+            gameBot.setHand(gameBot.initializeHand(deck));
+        }
     }
 
     public void initializeDeck() {

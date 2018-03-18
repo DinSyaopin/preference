@@ -6,9 +6,6 @@ import com.dinsyaopin.PlayerStrategy.TradingStrategy.PlayerTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
 import com.dinsyaopin.contracts.Contract;
 import com.dinsyaopin.Log.LogDataInitial;
-import com.dinsyaopin.contracts.ContractWithSuit;
-import com.dinsyaopin.contracts.Misere;
-import com.dinsyaopin.contracts.Pass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,13 +50,13 @@ public class Game {
         Dealer dealer = new Dealer();
 
         int currentBot = -1;
+        boolean gameEndingCondition = bot1.getPool() == gamePool || bot2.getPool() == gamePool || bot3.getPool() == gamePool;
 
-        while (bot1.getPool() != gamePool || bot2.getPool() != gamePool || bot3.getPool() != gamePool) {
+        while (!gameEndingCondition) {
 
             dealer.initializeDeck();
-            dealer.giveCardsToPlayer(bot1);
-            dealer.giveCardsToPlayer(bot2);
-            dealer.giveCardsToPlayer(bot3);
+            dealer.giveCardsToPlayers(gameBots);
+
             ArrayList<GameBot> bots = new ArrayList<>();
 
             int[] botsIndexes = countBotsIndexes(currentBot + 1);
@@ -89,9 +86,7 @@ public class Game {
                     currentWinner = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
                     currentWinner.addTrick();
                     indexOfCurrentWinner = bots.indexOf(currentWinner);
-                    bots.remove(0);
-                    bots.remove(1);
-                    bots.remove(2);
+                    bots.clear();
                 }
                 else {//sorting array with currentWinner as 0 element. needed 100%
                     botsIndexes = countBotsIndexes(indexOfCurrentWinner);
@@ -105,9 +100,7 @@ public class Game {
                     currentWinner = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
                     currentWinner.addTrick();
                     indexOfCurrentWinner = bots.indexOf(currentWinner);
-                    bots.remove(0);
-                    bots.remove(1);
-                    bots.remove(2);
+                    bots.clear();
                 }
             }
             convention.countPoints(bots, currentWinner, winnerContract);
@@ -119,19 +112,9 @@ public class Game {
             }
         }
 
-        //counting points
-
-        //equalize pool
-        alignPool(gameBots, gamePool);
-        //substract mountain
-        substractSmallestMountainFromAllMountains(gameBots);
-        //count middleMountain
-        int middleMountain = countMiddleMountain(gameBots);
-        //count middleMountainForPlayer
-        countMiddleMountainForEveryPlayer(gameBots, middleMountain);
-        //countNetting
-        countNetting(gameBots);
+        countPoints(gameBots, gamePool);
     }
+
     public void alignPool(ArrayList<GameBot> gameBots, int gamePool) {
         for (GameBot gameBot:
                 gameBots) {
@@ -142,6 +125,7 @@ public class Game {
             }
         }
     }
+
     public void substractSmallestMountainFromAllMountains(ArrayList<GameBot> gameBots) {
         int[] mountains = {gameBots.get(0).getMountain(), gameBots.get(1).getMountain(), gameBots.get(2).getMountain()};
         Arrays.sort(mountains);
@@ -150,6 +134,7 @@ public class Game {
             gameBot.setMountain(gameBot.getMountain() - mountains[0]);
         }
     }
+
     public int countMiddleMountain(ArrayList<GameBot> gameBots) {
         int mountSum = 0;
         for (GameBot gameBot:
@@ -158,13 +143,36 @@ public class Game {
         }
         return mountSum * 10 / 3;
     }
+
     public void countMiddleMountainForEveryPlayer(ArrayList<GameBot> gameBots, int middleMountain) {
         for (GameBot gameBot:
              gameBots) {
             gameBot.setMountain(middleMountain - gameBot.getMountain() * 10);
         }
     }
-    public void countNetting(ArrayList<GameBot> gameBots) {
+
+    public void writeOffWhists(ArrayList<GameBot> gameBots) {
 
     }
+
+    public void countTotalWhists(ArrayList<GameBot> gameBots) {
+        for (GameBot gameBot:
+                gameBots) {
+            gameBot.setTotalWhists(gameBot.getMountain() + gameBot.getWhistsToLeft() + gameBot.getWhistsToRight());
+        }
+    }
+
+    public void countPoints(ArrayList<GameBot> gameBots, int gamePool) {
+        alignPool(gameBots, gamePool);
+        substractSmallestMountainFromAllMountains(gameBots);
+        int middleMountain = countMiddleMountain(gameBots);
+        countMiddleMountainForEveryPlayer(gameBots, middleMountain);
+        writeOffWhists(gameBots);
+        countTotalWhists(gameBots);
+
+        System.out.println("Player 1 has total whists: " + bot1.getTotalWhists());
+        System.out.println("Player 2 has total whists: " + bot2.getTotalWhists());
+        System.out.println("Player 3 has total whsits: " + bot3.getTotalWhists());
+    }
+
 }
