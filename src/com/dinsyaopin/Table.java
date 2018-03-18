@@ -51,6 +51,7 @@ public class Table {
                             gameBot.getHand()) {
                         if (card == winnerCard) {
                             winnerBot = gameBot;
+                            break;
                         }
                     }
                 }
@@ -69,24 +70,28 @@ public class Table {
                         gameBot.getHand()) {
                     if (card == winnerCard) {
                         winnerBot = gameBot;
+                        break;
                     }
                 }
             }
         }
-        //removes table cards from players
+        removeTableCardsFromPlayers(gameBots);
+        return winnerBot;
+    }
+    public void removeTableCardsFromPlayers(ArrayList<GameBot> gameBots) {
         for (GameBot gameBot:
                 gameBots) {
-            for (Card card:
-                    gameBot.getHand()) {
-                for (Card tableCard:
-                        getCards()) {
+            for (Card tableCard:
+                    getCards()) {
+                for (Card card:
+                        gameBot.getHand()) {
                     if (card == tableCard) {
                         gameBot.getHand().remove(card);
+                        break;
                     }
                 }
             }
         }
-        return winnerBot;
     }
 
     public Card getFirstCard() {
