@@ -31,15 +31,28 @@ public class Game {
         Convention convention = getCurrentConvention();
         startGame(playerTradingStrategy, playerTurnsStrategy, convention);
     }
+    public void initializeBots() {
+        bot1 = new GameBot("Player1");
+        bot2 = new GameBot("Player2");
+        bot3 = new GameBot("Player3");
+    }
+    public void setAliases() {
+        bot1.setBotLeft(bot2);
+        bot1.setBotRight(bot3);
+
+        bot2.setBotLeft(bot3);
+        bot2.setBotRight(bot1);
+
+        bot3.setBotLeft(bot1);
+        bot3.setBotRight(bot2);
+    }
 
     private void startGame(PlayerTradingStrategy playerTradingStrategy, PlayerTurnsStrategy playerTurnsStrategy, Convention convention) throws IOException {
         int gamePool = getPool();
 
         logDataInitial.setPool(gamePool);
-
-        bot1 = new GameBot("Player1");
-        bot2 = new GameBot("Player2");
-        bot3 = new GameBot("Player3");
+        initializeBots();
+        setAliases();
 
         logDataInitial.setGameBot1Name(bot1.getBotName());
         logDataInitial.setGameBot2Name(bot2.getBotName());
