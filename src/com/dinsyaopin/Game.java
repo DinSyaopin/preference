@@ -145,7 +145,6 @@ public class Game {
                 currentBot = -1;
             }
         }
-
         countPoints(gameBots, gamePool);
     }
 
@@ -186,13 +185,27 @@ public class Game {
     }
 
     public void writeOffWhists(ArrayList<GameBot> gameBots) {
-        //some
+        GameBot bot1 = gameBots.get(0);
+        GameBot bot2 = gameBots.get(1);
+        GameBot bot3 = gameBots.get(2);
+        int bot1LeftWhists = bot1.getWhistsToLeft() - bot2.getWhistsToRight();
+        int bot1RightWhists = bot1.getWhistsToRight() - bot3.getWhistsToLeft();
+
+        int bot2LeftWhists = bot2.getWhistsToLeft() - bot3.getWhistsToRight();
+        int bot2RightWhists = bot2.getWhistsToRight() - bot1.getWhistsToLeft();
+
+        int bot3LeftWhists = bot3.getWhistsToLeft() - bot1.getWhistsToRight();
+        int bot3RightWhists = bot3.getWhistsToRight() - bot2.getWhistsToLeft();
+
+        bot1.setTotalWhists(bot1LeftWhists + bot1RightWhists);
+        bot2.setTotalWhists(bot2LeftWhists + bot2RightWhists);
+        bot3.setTotalWhists(bot3LeftWhists + bot3RightWhists);
     }
 
     public void countTotalWhists(ArrayList<GameBot> gameBots) {
         for (GameBot gameBot:
                 gameBots) {
-            gameBot.setTotalWhists(gameBot.getMountain() + gameBot.getWhistsToLeft() + gameBot.getWhistsToRight());
+            gameBot.setTotalWhists(gameBot.getMountain() + gameBot.getTotalWhists());
         }
     }
 
