@@ -81,10 +81,9 @@ public class Game {
             }
 
             GameBot winnerOfTurn = new GameBot("");
-            int countOfTurns = 10;
-            int indexOfCurrentWinner = 0;
 
-            doTurns(bots, gameBots, winnerOfTurn, winnerContract, indexOfCurrentWinner);
+
+            doTurns(bots, gameBots, winnerOfTurn, winnerContract);
 
             convention.countPoints(bots, winnerContract);
 
@@ -101,6 +100,7 @@ public class Game {
         bot2 = new GameBot("Player2");
         bot3 = new GameBot("Player3");
     }
+
     private void setAliases() {
         bot1.setBotLeft(bot2);
         bot1.setBotRight(bot3);
@@ -111,10 +111,12 @@ public class Game {
         bot3.setBotLeft(bot1);
         bot3.setBotRight(bot2);
     }
-    //doTurns add tricks to all bots
+
     private void doTurns(ArrayList<GameBot> bots, ArrayList<GameBot> gameBots, GameBot winnerOfTurn,
-                        Contract winnerContract, int indexOfCurrentWinner) {
+                        Contract winnerContract) {
         int countOfTurns = 10;
+        int indexOfCurrentWinner = 0;
+
         for (int i = 0; i < countOfTurns; i++) {//turns
             //initialize table every turn
             Table table = new Table();
