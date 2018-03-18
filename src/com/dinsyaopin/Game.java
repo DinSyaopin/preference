@@ -136,16 +136,18 @@ public class Game {
             }
             else {//sorting array with currentWinner as 0 element. needed 100%
                 botsIndexes = countBotsIndexes(indexOfCurrentWinner);
-                for (int j = 0; i < 2; i++) {
+                for (int j = 0; j <= 2; j++) {
                     bots.add(gameBots.get(botsIndexes[j]));
                 }
                 bots.get(0).putCard(table, winnerContract, null);
                 Suits turnSuit = table.getFirstCard().suit;
                 bots.get(1).putCard(table, winnerContract, turnSuit);
                 bots.get(2).putCard(table, winnerContract, turnSuit);
-                winnerOfTurn = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
+
+                winnerOfTurn = table.showTurnWinner(bots, turnSuit, winnerContract);
                 winnerOfTurn.addTrick();
                 indexOfCurrentWinner = bots.indexOf(winnerOfTurn);
+
                 bots.clear();
             }
         }

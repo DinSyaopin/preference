@@ -11,10 +11,13 @@ import com.dinsyaopin.contracts.Pass;
 import java.util.Random;
 
 public class NoviceTurnsStrategy implements PlayerTurnsStrategy {
-    public Card takeRandomCardFromHand(GameBot gameBot) {
+    private Card takeRandomCardFromHand(GameBot gameBot) {
         Random random = new Random();
-        int randomCard = random.nextInt(gameBot.getHand().size() - 1);
-        return gameBot.getHand().get(randomCard);
+        if (gameBot.getHand().size() != 1) {
+            int randomCard = random.nextInt(gameBot.getHand().size() - 1);
+            return gameBot.getHand().get(randomCard);
+        }
+        else return gameBot.getHand().get(0);
     }
 
     @Override

@@ -78,7 +78,7 @@ public class Table {
         removeTableCardsFromPlayers(gameBots);
         return winnerBot;
     }
-    public void removeTableCardsFromPlayers(ArrayList<GameBot> gameBots) {
+    private void removeTableCardsFromPlayers(ArrayList<GameBot> gameBots) {
         for (GameBot gameBot:
                 gameBots) {
             for (Card tableCard:
@@ -98,7 +98,7 @@ public class Table {
         return cards.get(0);
     }
 
-    public ArrayList<Card> getCards() {
+    private ArrayList<Card> getCards() {
         return cards;
     }
 }
