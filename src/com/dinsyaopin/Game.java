@@ -73,6 +73,7 @@ public class Game {
 
             Contract winnerContract = playerTradingStrategy.toTrade(bots);
             GameBot winnerOfTrading = winnerContract.getWinner();
+
             if (winnerContract.toString().equals("Контракт с мастью") || winnerContract.toString().equals("Контракт без масти")) {
                 dealer.giveBuyIn(winnerOfTrading);
                 ArrayList<GameBot> botsWithoutContract = playerTradingStrategy.takeBotsWithoutContract(gameBots, winnerContract);
@@ -80,10 +81,7 @@ public class Game {
                 //bots without contract whisting or not.
             }
 
-            //GameBot winnerOfTurn = new GameBot("");
-            GameBot winnerOfTurn = null;
-
-            doTurns(bots, gameBots, winnerOfTurn, winnerContract);
+            doTurns(bots, gameBots, winnerContract);
 
             convention.countPoints(bots, winnerContract);
 
@@ -112,8 +110,11 @@ public class Game {
         bot3.setBotRight(bot2);
     }
 
-    private void doTurns(ArrayList<GameBot> bots, ArrayList<GameBot> gameBots, GameBot winnerOfTurn,
-                        Contract winnerContract) {
+    private void doTurns(ArrayList<GameBot> bots, ArrayList<GameBot> gameBots, Contract winnerContract) {
+        //GameBot winnerOfTurn = bots.get(0);
+        GameBot winnerOfTurn = null;
+        //winnerOfTurn = bot1;
+        //winnerOfTurn = bots.get(0);
         int countOfTurns = 10;
         int indexOfCurrentWinner = 0;
 

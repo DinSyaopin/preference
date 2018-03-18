@@ -12,7 +12,7 @@ public class Table {
     }
     public GameBot showTurnWinner(ArrayList<GameBot> gameBots, Suits turnSuit, Contract contract) {
         Card winnerCard = getFirstCard();
-        GameBot winnerBot = new GameBot(null);
+        GameBot winnerBot = null;
         ArrayList<Card> trumpCards = new ArrayList<>();
         if (contract.getSuit() != null) {
             for (Card card:
@@ -56,10 +56,10 @@ public class Table {
                 }
             }
         }
-        else {
+        else {//contract.getSuit() == 0
             for (Card card :
                     getCards()) {
-                if ((card.suit == turnSuit) && (winnerCard.rank.getValue() > card.rank.getValue())) {
+                if ((card.suit == turnSuit) && (winnerCard.rank.getValue() < card.rank.getValue())) {
                     winnerCard = card;
                 }
             }
@@ -69,6 +69,19 @@ public class Table {
                         gameBot.getHand()) {
                     if (card == winnerCard) {
                         winnerBot = gameBot;
+                    }
+                }
+            }
+        }
+        //removes table cards from players
+        for (GameBot gameBot:
+                gameBots) {
+            for (Card card:
+                    gameBot.getHand()) {
+                for (Card tableCard:
+                        getCards()) {
+                    if (card == tableCard) {
+                        gameBot.getHand().remove(card);
                     }
                 }
             }

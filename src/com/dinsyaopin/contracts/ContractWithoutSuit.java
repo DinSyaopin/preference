@@ -3,23 +3,16 @@ package com.dinsyaopin.contracts;
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Suits;
 
-public class ContractWithSuit extends Contract {
-    private Suits suit;
+public class ContractWithoutSuit extends Contract {
 
-    public Suits getSuit() {
-        return suit;
-    }
-
-    public ContractWithSuit(int tricks, Suits suit) {
+    public ContractWithoutSuit(int tricks) {
         this.tricks = tricks;
         switch (tricks) {
             case 6 : setWhist(4); break;
             case 7 : setWhist(2); break;
             default : setWhist(1); break;
         }
-        this.suit = suit;
     }
-
     public void setWhist(int whist) {
         this.whist = whist;
     }
@@ -39,6 +32,11 @@ public class ContractWithSuit extends Contract {
     }
 
     @Override
+    public Suits getSuit() {
+        return this.suit;
+    }
+
+    @Override
     public int getWhist() {
         return this.whist;
     }
@@ -50,6 +48,6 @@ public class ContractWithSuit extends Contract {
 
     @Override
     public String toString() {
-        return "Контракт с мастью";
+        return "Контракт без масти";
     }
 }

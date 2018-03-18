@@ -2,6 +2,7 @@ package com.dinsyaopin;
 
 import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
 import com.dinsyaopin.contracts.Contract;
+import com.dinsyaopin.contracts.Pass;
 
 import java.util.ArrayList;
 

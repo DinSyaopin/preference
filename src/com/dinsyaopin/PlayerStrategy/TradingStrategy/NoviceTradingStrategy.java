@@ -4,10 +4,7 @@ import com.dinsyaopin.Card;
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Suits;
 import com.dinsyaopin.Ranks;
-import com.dinsyaopin.contracts.Contract;
-import com.dinsyaopin.contracts.ContractWithSuit;
-import com.dinsyaopin.contracts.Misere;
-import com.dinsyaopin.contracts.Pass;
+import com.dinsyaopin.contracts.*;
 
 import java.util.ArrayList;
 
@@ -66,13 +63,13 @@ public class NoviceTradingStrategy implements PlayerTradingStrategy {
         if (counterOfWinningCards == 4) {
             counterOfWinningCards = countCurrentCard(gameBot, Ranks.KING, counterOfWinningCards);
             if (counterOfWinningCards >= 6 && counterOfWinningCards < 8) {
-                currentContract = new Contract(counterOfWinningCards);
+                currentContract = new ContractWithoutSuit(counterOfWinningCards);
             }
             if (counterOfWinningCards == 8) {
-                currentContract = new Contract(counterOfWinningCards);
+                currentContract = new ContractWithoutSuit(counterOfWinningCards);
                 counterOfWinningCards = countCurrentCard(gameBot, Ranks.QUEEN, counterOfWinningCards);
                 if (counterOfWinningCards > 8) {
-                    currentContract = new Contract(counterOfWinningCards);
+                    currentContract = new ContractWithoutSuit(counterOfWinningCards);
                 }
             }
         }
