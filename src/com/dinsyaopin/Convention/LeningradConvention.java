@@ -36,7 +36,7 @@ public class LeningradConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Pass pass) {//ready
+    public void countPoints(ArrayList<GameBot> gameBots, Pass pass) {//ready
         int[] tricksArray = {gameBots.get(0).getTricks(),gameBots.get(1).getTricks(), gameBots.get(2).getTricks()};
         Arrays.sort(tricksArray);
         for (GameBot gameBot:
@@ -54,12 +54,13 @@ public class LeningradConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Contract contract) {
+    public void countPoints(ArrayList<GameBot> gameBots, Contract contract) {
+        GameBot botWithContract = contract.getWinner();
         for (GameBot gameBot:
                 gameBots) {
             int penalty = contract.getTricks() - gameBot.getTricks();
 
-            if (gameBot == gameBotWithContract) {
+            if (gameBot == botWithContract) {
                 if (gameBot.getTricks() == contract.getTricks()) {
                     gameBot.addToPool(contract.getTricks() * checkPoolMultiplier(contract));
                 }
@@ -82,16 +83,17 @@ public class LeningradConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, ContractWithSuit winnerContract) {
+    public void countPoints(ArrayList<GameBot> bots, ContractWithSuit winnerContract) {
 
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Misere misere) {
-        if (gameBotWithContract.getTricks() == 0) {
-            gameBotWithContract.addToPool(10);
+    public void countPoints(ArrayList<GameBot> gameBots, Misere misere) {
+        GameBot botWithContract = misere.getWinner();
+        if (botWithContract.getTricks() == 0) {
+            botWithContract.addToPool(10);
         }
-        else gameBotWithContract.addToMountain(gameBotWithContract.getTricks() * 20);
+        else botWithContract.addToMountain(botWithContract.getTricks() * 20);
     }
 
     @Override

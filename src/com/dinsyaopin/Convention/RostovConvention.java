@@ -1,5 +1,6 @@
 package com.dinsyaopin.Convention;
 
+import com.dinsyaopin.Game;
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.contracts.Contract;
 import com.dinsyaopin.contracts.ContractWithSuit;
@@ -34,26 +35,27 @@ public class RostovConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Contract winnerContract) {
+    public void countPoints(ArrayList<GameBot> bots, Contract winnerContract) {
 
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, ContractWithSuit winnerContract) {
+    public void countPoints(ArrayList<GameBot> bots, ContractWithSuit winnerContract) {
 
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Pass winnerContract) {
+    public void countPoints(ArrayList<GameBot> bots, Pass winnerContract) {
 
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Misere winnerContract) {
-        if (gameBotWithContract.getTricks() == 0) {
-            gameBotWithContract.addToPool(10);
+    public void countPoints(ArrayList<GameBot> bots, Misere winnerContract) {
+        GameBot botWithContract = winnerContract.getWinner();
+        if (botWithContract.getTricks() == 0) {
+            botWithContract.addToPool(10);
         }
-        else gameBotWithContract.addToMountain(gameBotWithContract.getTricks() * 10);
+        else botWithContract.addToMountain(botWithContract.getTricks() * 10);
     }
 
     @Override

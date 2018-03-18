@@ -20,6 +20,7 @@ public class Game {
     private GameBot bot3;
     private ArrayList<LogData> logData;
     private LogDataInitial logDataInitial = new LogDataInitial();
+    private int[] botsIndexes;
 
     public void startGame() throws IOException {
         logData = new ArrayList<>();
@@ -29,58 +30,6 @@ public class Game {
         PlayerTurnsStrategy playerTurnsStrategy = getPlayerTurnsStrategy();
         Convention convention = getCurrentConvention();
         startGame(playerTradingStrategy, playerTurnsStrategy, convention);
-    }
-    public void initializeBots() {
-        bot1 = new GameBot("Player1");
-        bot2 = new GameBot("Player2");
-        bot3 = new GameBot("Player3");
-    }
-    public void setAliases() {
-        bot1.setBotLeft(bot2);
-        bot1.setBotRight(bot3);
-
-        bot2.setBotLeft(bot3);
-        bot2.setBotRight(bot1);
-
-        bot3.setBotLeft(bot1);
-        bot3.setBotRight(bot2);
-    }
-    public void doTurns(ArrayList<GameBot> bots, ArrayList<GameBot> gameBots, GameBot currentWinner,
-                        Contract winnerContract, int indexOfCurrentWinner, int[] botsIndexes) {
-        int countOfTurns = 10;
-        for (int i = 0; i < countOfTurns; i++) {//turns
-            //initialize table every turn
-            Table table = new Table();
-            //ArrayList<GameBot>/////////
-            //players put cards
-            //table chooses trick winner
-            //convention counts points
-
-            if (currentWinner == null) {
-                bots.get(0).putCard(table, winnerContract, null);
-                Suits turnSuit = table.getFirstCard().suit;
-                bots.get(1).putCard(table, winnerContract, turnSuit);
-                bots.get(2).putCard(table, winnerContract, turnSuit);
-                currentWinner = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
-                currentWinner.addTrick();
-                indexOfCurrentWinner = bots.indexOf(currentWinner);
-                bots.clear();
-            }
-            else {//sorting array with currentWinner as 0 element. needed 100%
-                botsIndexes = countBotsIndexes(indexOfCurrentWinner);
-                for (int j = 0; i < 2; i++) {
-                    bots.add(gameBots.get(botsIndexes[j]));
-                }
-                bots.get(0).putCard(table, winnerContract, null);
-                Suits turnSuit = table.getFirstCard().suit;
-                bots.get(1).putCard(table, winnerContract, turnSuit);
-                bots.get(2).putCard(table, winnerContract, turnSuit);
-                currentWinner = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
-                currentWinner.addTrick();
-                indexOfCurrentWinner = bots.indexOf(currentWinner);
-                bots.clear();
-            }
-        }
     }
 
     private void startGame(PlayerTradingStrategy playerTradingStrategy, PlayerTurnsStrategy playerTurnsStrategy, Convention convention) throws IOException {
@@ -116,7 +65,7 @@ public class Game {
 
             ArrayList<GameBot> bots = new ArrayList<>();
 
-            int[] botsIndexes = countBotsIndexes(currentBot + 1);
+            botsIndexes = countBotsIndexes(currentBot + 1);
 
             for (int i = 0; i <= 2; i++) {
                 bots.add(gameBots.get(botsIndexes[i]));
@@ -131,13 +80,13 @@ public class Game {
                 //bots without contract whisting or not.
             }
 
-            GameBot currentWinner = null;
+            GameBot winnerOfTurn = new GameBot("");
             int countOfTurns = 10;
             int indexOfCurrentWinner = 0;
 
-            doTurns(bots, gameBots, currentWinner, winnerContract, indexOfCurrentWinner, botsIndexes);
+            doTurns(bots, gameBots, winnerOfTurn, winnerContract, indexOfCurrentWinner);
 
-            convention.countPoints(bots, currentWinner, winnerContract);
+            convention.countPoints(bots, winnerContract);
 
             //shitcode moves bots in array for next turn
             currentBot++;
@@ -146,6 +95,57 @@ public class Game {
             }
         }
         countPoints(gameBots, gamePool);
+    }
+    public void initializeBots() {
+        bot1 = new GameBot("Player1");
+        bot2 = new GameBot("Player2");
+        bot3 = new GameBot("Player3");
+    }
+    public void setAliases() {
+        bot1.setBotLeft(bot2);
+        bot1.setBotRight(bot3);
+
+        bot2.setBotLeft(bot3);
+        bot2.setBotRight(bot1);
+
+        bot3.setBotLeft(bot1);
+        bot3.setBotRight(bot2);
+    }
+    //doTurns add tricks to all bots
+    public void doTurns(ArrayList<GameBot> bots, ArrayList<GameBot> gameBots, GameBot winnerOfTurn,
+                        Contract winnerContract, int indexOfCurrentWinner) {
+        int countOfTurns = 10;
+        for (int i = 0; i < countOfTurns; i++) {//turns
+            //initialize table every turn
+            Table table = new Table();
+            //players put cards
+            //table chooses trick winner
+
+            if (winnerOfTurn == null) {
+                bots.get(0).putCard(table, winnerContract, null);
+                Suits turnSuit = table.getFirstCard().suit;
+                bots.get(1).putCard(table, winnerContract, turnSuit);
+                bots.get(2).putCard(table, winnerContract, turnSuit);
+                winnerOfTurn = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
+                winnerOfTurn.addTrick();
+                indexOfCurrentWinner = bots.indexOf(winnerOfTurn);
+                bots.clear();
+            }
+            else {//sorting array with currentWinner as 0 element. needed 100%
+                botsIndexes = countBotsIndexes(indexOfCurrentWinner);
+                for (int j = 0; i < 2; i++) {
+                    bots.add(gameBots.get(botsIndexes[j]));
+                }
+                bots.get(0).putCard(table, winnerContract, null);
+                Suits turnSuit = table.getFirstCard().suit;
+                bots.get(1).putCard(table, winnerContract, turnSuit);
+                bots.get(2).putCard(table, winnerContract, turnSuit);
+                winnerOfTurn = table.showTurnWinner(bots, turnSuit, winnerContract);//should check method/logic has done
+                winnerOfTurn.addTrick();
+                indexOfCurrentWinner = bots.indexOf(winnerOfTurn);
+                bots.clear();
+            }
+        }
     }
 
     public void alignPool(ArrayList<GameBot> gameBots, int gamePool) {

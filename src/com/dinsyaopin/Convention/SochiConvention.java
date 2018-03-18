@@ -35,17 +35,17 @@ public class SochiConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Contract winnerContract) {
+    public void countPoints(ArrayList<GameBot> bots, Contract winnerContract) {
 
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, ContractWithSuit winnerContract) {
+    public void countPoints(ArrayList<GameBot> bots, ContractWithSuit winnerContract) {
 
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> gameBots, GameBot gameBotWithContract, Pass winnerContract) {
+    public void countPoints(ArrayList<GameBot> gameBots, Pass winnerContract) {
         int[] tricksArray = {gameBots.get(0).getTricks(),gameBots.get(1).getTricks(), gameBots.get(2).getTricks()};
         Arrays.sort(tricksArray);
         for (GameBot gameBot:
@@ -63,10 +63,11 @@ public class SochiConvention extends Convention {
     }
 
     @Override
-    public void countPoints(ArrayList<GameBot> bots, GameBot gameBotWithContract, Misere winnerContract) {
-        if (gameBotWithContract.getTricks() == 0) {
-            gameBotWithContract.addToPool(10);
+    public void countPoints(ArrayList<GameBot> bots, Misere winnerContract) {
+        GameBot botWithContract = winnerContract.getWinner();
+        if (botWithContract.getTricks() == 0) {
+            botWithContract.addToPool(10);
         }
-        else gameBotWithContract.addToMountain(gameBotWithContract.getTricks() * 10);
+        else botWithContract.addToMountain(botWithContract.getTricks() * 10);
     }
 }
