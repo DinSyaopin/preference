@@ -23,17 +23,18 @@ public class Game {
     private LogDataInitial logDataInitial = new LogDataInitial();
     private int[] botsIndexes;
 
-    public void startGame() throws IOException {
+    public void startGame(int countOfGames) throws IOException {
         logData = new ArrayList<>();
         logData.add(logDataInitial);
 
         PlayerTradingStrategy playerTradingStrategy = getPlayerTradingStrategy();
         PlayerTurnsStrategy playerTurnsStrategy = getPlayerTurnsStrategy();
         Convention convention = getCurrentConvention();
-        startGame(playerTradingStrategy, playerTurnsStrategy, convention);
+        startGame(playerTradingStrategy, playerTurnsStrategy, convention, countOfGames);
     }
 
-    private void startGame(PlayerTradingStrategy playerTradingStrategy, PlayerTurnsStrategy playerTurnsStrategy, Convention convention) throws IOException {
+    private void startGame(PlayerTradingStrategy playerTradingStrategy, PlayerTurnsStrategy playerTurnsStrategy,
+                           Convention convention, int countOfGames) throws IOException {
         int gamePool = getPool();
 
         logDataInitial.setPool(gamePool);
@@ -59,7 +60,7 @@ public class Game {
         int gameCounter = 1;
         boolean poolEndingCondition = bot1.getPool() != gamePool || bot2.getPool() != gamePool || bot3.getPool() != gamePool;
 
-        while (gameCounter != 10 || poolEndingCondition) {
+        while (gameCounter != countOfGames || poolEndingCondition) {
 
             dealer.initializeDeck();
             dealer.giveCardsToPlayers(gameBots);
@@ -227,5 +228,38 @@ public class Game {
         System.out.println("Player 1 has total whists: " + bot1.getTotalWhists());
         System.out.println("Player 2 has total whists: " + bot2.getTotalWhists());
         System.out.println("Player 3 has total whsits: " + bot3.getTotalWhists());
+    }
+
+    public static String showStartAlignment(int numberOfGame) {
+        return "";
+    }
+    public static String showTradingForGame(int numberOfGame) {
+        return "";
+    }
+    public static String showBidsForGame(int numberOfGame) {
+        return "";
+    }
+    public static String showGameStatistics(int numberOfGame) {
+        return "";
+    }
+    public static String showPlayersPointsAfterGame(int numberOfGame) {
+        return "";
+    }
+    public static String showCurrentGameStatistics(int numberOfGame) {
+        return "";
+    }
+    public static String showPlayerPointsAfterGame(int gameBot, int numberOfGame) {
+        return "";
+    }
+    public static int showTotalPointsOfPlayerAfterGame(int gameBot, int numberOfGame) {
+        return 0;
+    }
+
+    public static String showPlayerStatisticsAfterGame(int gameBot, int numberOfGame) {
+        return "";
+    }
+
+    public static int[] countTotalPointsAfterGame(int numberOfGame) {
+        return null;
     }
 }
