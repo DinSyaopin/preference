@@ -29,6 +29,7 @@ public class Configuration {
         System.out.println("Enter a digit. Level of player in turn: novice(0), student(1), master(2)");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int currentStrategy = Integer.parseInt(reader.readLine());
+        reader.close();
         PlayerTurnsStrategy playerTurnsStrategy = null;
         switch (currentStrategy) {
             case 0:
@@ -48,6 +49,7 @@ public class Configuration {
         System.out.println("Enter a digit. Level of player in trading: novice(0), student(1), master(2)");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int currentStrategy = Integer.parseInt(reader.readLine());
+        reader.close();
         PlayerTradingStrategy playerTradingStrategy = null;
         switch (currentStrategy) {
             case 0:
@@ -66,6 +68,7 @@ public class Configuration {
         System.out.println("Enter a digit. Convention: Leningrad(0), Rostov(1), Sochi(2)");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         int convention = Integer.parseInt(reader.readLine());
+        reader.close();
         Convention currentConvention = null;
         switch (convention) {
             case 0:

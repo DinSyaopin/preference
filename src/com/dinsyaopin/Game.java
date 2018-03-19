@@ -46,9 +46,9 @@ public class Game {
 
         int currentBot = -1;
         int gameCounter = 1;
-        boolean poolEndingCondition = bot1.getPool() != gamePool || bot2.getPool() != gamePool || bot3.getPool() != gamePool;
+        //boolean poolEndingCondition = bot1.getPool() != gamePool || bot2.getPool() != gamePool || bot3.getPool() != gamePool;
 
-        while (gameCounter != countOfGames || poolEndingCondition) {
+        while (gameCounter <= countOfGames) {
 
             dealer.initializeDeck();
             dealer.giveCardsToPlayers(gameBots);
@@ -68,7 +68,6 @@ public class Game {
                 dealer.giveBuyIn(winnerOfTrading);
                 ArrayList<GameBot> botsWithoutContract = playerTradingStrategy.takeBotsWithoutContract(gameBots, winnerContract);
                 playerTradingStrategy.tradeWhists(winnerContract, botsWithoutContract);
-                //bots without contract whisting or not.
             }
 
             doTurns(bots, gameBots, winnerContract);
@@ -78,7 +77,7 @@ public class Game {
                     gameBots) {
                 gameBot.setTrick(0);
             }
-            //shitcode moves bots in array for next turn
+
             currentBot++;
             if (currentBot == 2) {
                 currentBot = -1;
@@ -215,7 +214,7 @@ public class Game {
 
         System.out.println("Player 1 has total whists: " + bot1.getTotalWhists());
         System.out.println("Player 2 has total whists: " + bot2.getTotalWhists());
-        System.out.println("Player 3 has total whsits: " + bot3.getTotalWhists());
+        System.out.println("Player 3 has total whists: " + bot3.getTotalWhists());
     }
 
     public static String showStartAlignment(int numberOfGame) {

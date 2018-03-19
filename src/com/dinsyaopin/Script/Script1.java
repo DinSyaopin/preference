@@ -1,4 +1,4 @@
-package com.dinsyaopin.contracts.Script;
+package com.dinsyaopin.Script;
 
 import com.dinsyaopin.Game;
 
