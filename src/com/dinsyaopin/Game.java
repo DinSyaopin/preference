@@ -1,12 +1,9 @@
 package com.dinsyaopin;
 
 import com.dinsyaopin.Convention.Convention;
-import com.dinsyaopin.Log.LogData;
 import com.dinsyaopin.PlayerStrategy.TradingStrategy.PlayerTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
 import com.dinsyaopin.contracts.Contract;
-import com.dinsyaopin.Log.LogDataInitial;
-import com.dinsyaopin.contracts.Pass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,13 +16,9 @@ public class Game {
     private GameBot bot1;
     private GameBot bot2;
     private GameBot bot3;
-    private ArrayList<LogData> logData;
-    private LogDataInitial logDataInitial = new LogDataInitial();
     private int[] botsIndexes;
 
     public void startGame(int countOfGames) throws IOException {
-        logData = new ArrayList<>();
-        logData.add(logDataInitial);
 
         PlayerTradingStrategy playerTradingStrategy = getPlayerTradingStrategy();
         PlayerTurnsStrategy playerTurnsStrategy = getPlayerTurnsStrategy();
@@ -37,13 +30,8 @@ public class Game {
                            Convention convention, int countOfGames) throws IOException {
         int gamePool = getPool();
 
-        logDataInitial.setPool(gamePool);
         initializeBots();
         setAliases();
-
-        logDataInitial.setGameBot1Name(bot1.getBotName());
-        logDataInitial.setGameBot2Name(bot2.getBotName());
-        logDataInitial.setGameBot3Name(bot3.getBotName());
 
         bot1.setPlayerTurnsStrategy(playerTurnsStrategy);
         bot2.setPlayerTurnsStrategy(playerTurnsStrategy);
@@ -231,6 +219,7 @@ public class Game {
     }
 
     public static String showStartAlignment(int numberOfGame) {
+
         return "";
     }
     public static String showTradingForGame(int numberOfGame) {
