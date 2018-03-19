@@ -56,10 +56,10 @@ public class Game {
         Dealer dealer = new Dealer();
 
         int currentBot = -1;
+        int gameCounter = 1;
+        boolean poolEndingCondition = bot1.getPool() != gamePool || bot2.getPool() != gamePool || bot3.getPool() != gamePool;
 
-        boolean gameEndingCondition = bot1.getPool() == gamePool || bot2.getPool() == gamePool || bot3.getPool() == gamePool;
-
-        while (!gameEndingCondition) {
+        while (gameCounter != 10 || poolEndingCondition) {
 
             dealer.initializeDeck();
             dealer.giveCardsToPlayers(gameBots);
@@ -91,9 +91,10 @@ public class Game {
             }
             //shitcode moves bots in array for next turn
             currentBot++;
-            if (currentBot == 1) {
+            if (currentBot == 2) {
                 currentBot = -1;
             }
+            gameCounter++;
         }
         countTotalPoints(gameBots, gamePool);
     }
