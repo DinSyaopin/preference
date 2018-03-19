@@ -6,6 +6,7 @@ import com.dinsyaopin.PlayerStrategy.TradingStrategy.PlayerTradingStrategy;
 import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
 import com.dinsyaopin.contracts.Contract;
 import com.dinsyaopin.Log.LogDataInitial;
+import com.dinsyaopin.contracts.Pass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,9 +83,7 @@ public class Game {
             }
 
             doTurns(bots, gameBots, winnerContract);
-
             convention.countPoints(gameBots, winnerContract);
-
             //flush tricks of gamebots
             for (GameBot gameBot:
                     gameBots) {
@@ -116,10 +115,7 @@ public class Game {
     }
 
     private void doTurns(ArrayList<GameBot> bots, ArrayList<GameBot> gameBots, Contract winnerContract) {
-        //GameBot winnerOfTurn = bots.get(0);
         GameBot winnerOfTurn = null;
-        //winnerOfTurn = bot1;
-        //winnerOfTurn = bots.get(0);
         int countOfTurns = 10;
         int indexOfCurrentWinner = 0;
 

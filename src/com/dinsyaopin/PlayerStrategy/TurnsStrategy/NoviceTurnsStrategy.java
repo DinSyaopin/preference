@@ -3,10 +3,7 @@ package com.dinsyaopin.PlayerStrategy.TurnsStrategy;
 import com.dinsyaopin.Card;
 import com.dinsyaopin.GameBot;
 import com.dinsyaopin.Suits;
-import com.dinsyaopin.contracts.Contract;
-import com.dinsyaopin.contracts.ContractWithSuit;
-import com.dinsyaopin.contracts.Misere;
-import com.dinsyaopin.contracts.Pass;
+import com.dinsyaopin.contracts.*;
 
 import java.util.Random;
 
@@ -37,7 +34,7 @@ public class NoviceTurnsStrategy implements PlayerTurnsStrategy {
     }
 
     @Override
-    public Card putCard(Contract contract, GameBot gameBot, Suits turnSuit) {
+    public Card putCard(ContractWithoutSuit contract, GameBot gameBot, Suits turnSuit) {
         if (turnSuit == null) {
             return takeRandomCardFromHand(gameBot);
         }

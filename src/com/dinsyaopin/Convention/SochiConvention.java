@@ -1,16 +1,12 @@
 package com.dinsyaopin.Convention;
 
 import com.dinsyaopin.GameBot;
-import com.dinsyaopin.contracts.Contract;
-import com.dinsyaopin.contracts.ContractWithSuit;
-import com.dinsyaopin.contracts.Misere;
-import com.dinsyaopin.contracts.Pass;
+import com.dinsyaopin.contracts.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SochiConvention extends Convention {
-
     @Override
     public int checkWhistsMultiplier(Contract contract) {
         switch (contract.getTricks()) {
@@ -44,6 +40,62 @@ public class SochiConvention extends Convention {
             case 9 : return 8;
             case 10 : return 10;
             default: return 2;
+        }
+    }
+
+    public void countPoints(ArrayList<GameBot> gameBots, ContractWithoutSuit contract) {
+        GameBot botWithContract = contract.getWinner();
+        for (GameBot gameBot:
+                gameBots) {
+            int penalty = contract.getTricks() - gameBot.getTricks();
+
+            if (gameBot == botWithContract) {
+                if (gameBot.getTricks() == contract.getTricks()) {
+                    gameBot.addToPool(contract.getTricks() * checkPoolMultiplier(contract));
+                }
+                else {
+                    gameBot.addToMountain(penalty * checkRemiseGameMultiplier(contract));
+                }
+            }
+            else {
+                if (gameBot.isWhisting()) {
+                    if (gameBot.getTricks() >= contract.getWhist()) {
+                        gameBot.addWhists(contract.getWinner(),contract.getWhist() * checkWhistsMultiplier(contract));
+                    }
+                    else {
+                        penalty = contract.getWhist() - gameBot.getTricks();
+                        gameBot.addToMountain(penalty * checkRemiseWhistsMultiplier(contract));
+                    }
+                }
+            }
+        }
+    }
+
+    public void countPoints(ArrayList<GameBot> gameBots, ContractWithSuit contract) {
+        GameBot botWithContract = contract.getWinner();
+        for (GameBot gameBot:
+                gameBots) {
+            int penalty = contract.getTricks() - gameBot.getTricks();
+
+            if (gameBot == botWithContract) {
+                if (gameBot.getTricks() == contract.getTricks()) {
+                    gameBot.addToPool(contract.getTricks() * checkPoolMultiplier(contract));
+                }
+                else {
+                    gameBot.addToMountain(penalty * checkRemiseGameMultiplier(contract));
+                }
+            }
+            else {
+                if (gameBot.isWhisting()) {
+                    if (gameBot.getTricks() >= contract.getWhist()) {
+                        gameBot.addWhists(contract.getWinner(),contract.getWhist() * checkWhistsMultiplier(contract));
+                    }
+                    else {
+                        penalty = contract.getWhist() - gameBot.getTricks();
+                        gameBot.addToMountain(penalty * checkRemiseWhistsMultiplier(contract));
+                    }
+                }
+            }
         }
     }
 

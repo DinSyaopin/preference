@@ -1,8 +1,7 @@
 package com.dinsyaopin;
 
 import com.dinsyaopin.PlayerStrategy.TurnsStrategy.PlayerTurnsStrategy;
-import com.dinsyaopin.contracts.Contract;
-import com.dinsyaopin.contracts.Pass;
+import com.dinsyaopin.contracts.*;
 
 import java.util.ArrayList;
 
@@ -156,7 +155,15 @@ public class GameBot {
     }
 
     public void putCard(Table table, Contract winnerContract, Suits turnSuit) {
-        Card card = playerTurnsStrategy.putCard(winnerContract, this, turnSuit);
+        Card card = null;
+        switch (winnerContract.toString()) {
+            case "Пас" : card = playerTurnsStrategy.putCard((Pass) winnerContract, this, turnSuit); break;
+            case "Мизер" : card = playerTurnsStrategy.putCard((Misere) winnerContract, this, turnSuit); break;
+            case "Контракт с мастью" : card = playerTurnsStrategy.putCard((ContractWithSuit) winnerContract, this, turnSuit); break;
+            case "Контракт без масти" : card = playerTurnsStrategy.putCard((ContractWithoutSuit) winnerContract, this, turnSuit); break;
+            default : card = playerTurnsStrategy.putCard((Pass) winnerContract, this, turnSuit); break;
+        }
+
         table.addCard(card);
     }
 }
